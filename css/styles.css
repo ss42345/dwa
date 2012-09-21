@@ -18,10 +18,7 @@
 	margin:0px auto;
 	background-image:url('../images/paper-tile.png');
 	padding:30px;
-	-moz-background-clip: padding; 
-	-webkit-background-clip: padding-box; 	
 	background-clip: padding-box;
-	-webkit-border-radius: 15px;
 	border-radius: 15px;
 }
 
