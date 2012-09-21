@@ -2,7 +2,8 @@
 <html>
 
 <head>
-<style type="text/css">
+<!--	<link rel="stylesheet" type="text/css" href="css/styles.css"> -->
+<style type='text/css'> 
 .right
 {
 	text-align:right;
@@ -18,6 +19,7 @@
 	text-align:center;
 	background-color:rgb(200,200,255);
 	width:1000px;
+	border:1px solid black;
 }
 
 #menu
@@ -27,21 +29,23 @@
 	width:200px;
 	float:left;
 	text-align:right;
+	border:1px solid black;
 }
 
-#content
+.content
 {
 	background-color:#EEEEEE;
-	height:600px;
+	height:500px;
 	width:800px;
 	float:left;
+	border:1px solid black;
 }
 
 #footer
 {
 	background-color:rgb(100,100,200);
 	clear:both;
-	text-align:center;>
+	text-align:center;
 }
 </style>
 </head>
@@ -66,16 +70,11 @@ By Shrikant Savant
 <a href="gitrepo.html" target="iframe_content"> Git Repository </a><br/>
 </div>
 
-<div id="content">
-<iframe id="content" name="iframe_content" frameborder="0">
-</iframe>
-</div>
-
-<div 
+<div>
+<iframe class="content" name="iframe_content"/>
 </div>
 
 </div>
-
 
 </body>
 </html>

@@ -1,0 +1,41 @@
+.right
+{
+	text-align:right;
+}
+
+#container
+{
+	text-align:center;
+}
+
+#header
+{
+	text-align:center;
+	background-color:rgb(200,200,255);
+	width:1000px;
+}
+
+#menu
+{
+	background-color:rgb(155,155,200);
+	height:500px;
+	width:200px;
+	float:left;
+	text-align:right;
+}
+
+.content
+{
+	background-color:#EEEEEE;
+	height:600px;
+	width:960px;
+	float:left;
+	border:3px solid black;
+}
+
+#footer
+{
+	background-color:rgb(100,100,200);
+	clear:both;
+	text-align:center;
+}
