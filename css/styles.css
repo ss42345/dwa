@@ -13,6 +13,7 @@
 	text-align:center;
 	background-color:rgb(200,200,255);
 	width:1000px;
+	border:1px solid black;	
 }
 
 #menu
@@ -22,15 +23,16 @@
 	width:200px;
 	float:left;
 	text-align:right;
+	border:1px solid black;	
 }
 
 .content
 {
 	background-color:#EEEEEE;
-	height:600px;
-	width:960px;
+	height:500px;
+	width:800px;
 	float:left;
-	border:3px solid black;
+	border:1px solid black;
 }
 
 #footer
