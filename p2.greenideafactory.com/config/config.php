@@ -33,8 +33,9 @@ A email designated to receive messages from the server. Examples:
 
 # Default DB name for this app
 #	define('DB_NAME', "myapp_com"); 
-	define('DB_NAME', "p2_greenideafactory_com");
-
+#	define('DB_NAME', "p2_greenideafactory_com");
+	define('DB_NAME', "greenide_p2_greenideafactory_com");
+	
 # Timezone
 	define('TIMEZONE', 'America/New_York');
 
@@ -45,5 +46,5 @@ A email designated to receive messages from the server. Examples:
 	//define('SMTP_PASSWORD', '');
 
 # For extra security, you might want to set different salts than what the core uses
-	//define('PASSWORD_SALT', '');
-	//define('TOKEN_SALT', '');
+	define('PASSWORD_SALT', 'MountHimalayas');
+	define('TOKEN_SALT', 'RiverGanges');
