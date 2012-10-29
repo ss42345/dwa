@@ -7,7 +7,7 @@ class users_controller extends base_controller {
 	} 
 	
 	public function index() {
-		echo "Welcome to the users's department";
+		# echo "Welcome to the users's department";
 	}
 	
 	public function signup() {
@@ -28,6 +28,7 @@ class users_controller extends base_controller {
 		
 		# Render template
 			echo $this->template;
+		
 	}
 	
 	public function logout() {
@@ -48,9 +49,8 @@ class users_controller extends base_controller {
 		Router::redirect("/");
 	}
 
-	public function profile($user_name = NULL) {
+	public function profile() {
 		
-		echo $user_name;
 		if (!$this->user) {
 			echo "Members only. <a href='/users/login'>Login</a>";
 			
@@ -82,7 +82,7 @@ class users_controller extends base_controller {
 		$user_id = DB::instance(DB_NAME)->insert("users", $_POST);
 	
 		# For now, just confirm they've signed up - we can make this fancier later
-		echo "You're signed up";	
+		# echo "You're signed up";	
 		
 	}	
 	public function p_login() {
@@ -111,13 +111,11 @@ class users_controller extends base_controller {
 		}
 		else {
 			# Login succeeded
-			echo 'Login succeeded';
-			
 			# Store this token in a cookie
 			@setcookie("token", $new_token, strtotime('+1 year'), '/');
 			
 			# Send them to the main page
-			Router::redirect("/");
+			Router::redirect("/users/profile");
 		}
 		
 	}
