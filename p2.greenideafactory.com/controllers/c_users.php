@@ -112,7 +112,7 @@ class users_controller extends base_controller {
 		else {
 			# Login succeeded
 			# Store this token in a cookie
-			@setcookie("token", $new_token, strtotime('+1 year'), '/');
+			@setcookie("token", $token, strtotime('+1 year'), '/');
 			
 			# Send them to the main page
 			Router::redirect("/users/profile");

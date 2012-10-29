@@ -1,2 +1,2 @@
 <h1>Profile of </h1>
-<h2><?=$user_name?></h2>
+<h2><?=$user->first_name?></h2>
