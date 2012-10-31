@@ -21,11 +21,14 @@ class users_controller extends base_controller {
 			echo $this->template;		
 		}
 	
-	public function login() {
+	public function login($error = NULL) {
 		# Setup view
 			$this->template->content = View::instance('v_users_login');
 			$this->template->title = "Login";
 		
+		# Pass data to the view
+			$this->template->content->error = $error;
+			
 		# Render template
 			echo $this->template;
 		
@@ -107,17 +110,19 @@ class users_controller extends base_controller {
 			#echo 'Login failed';
 			
 			# Send them back to the login page
-			Router::redirect("/users/login");
+			Router::redirect("/users/login/error");
 		}
 		else {
 			# Login succeeded
 			# Store this token in a cookie
 			@setcookie("token", $token, strtotime('+1 year'), '/');
 			
+			#echo Debug::dump($_POST,"Contents of POST");
+			
 			# Send them to the main page
 			Router::redirect("/users/profile");
 		}
-		
+				
 	}
 		
 } # end of the class
