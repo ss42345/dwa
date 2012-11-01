@@ -11,7 +11,7 @@ class users_controller extends base_controller {
 	}
 	
 	public function signup() {
-		echo "This is the signup page";
+		# echo "This is the signup page";
 	
 		# Setup view
 			$this->template->content = View::instance('v_users_signup');
