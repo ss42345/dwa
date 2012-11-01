@@ -125,7 +125,7 @@ class posts_controller extends base_controller {
 	
 		# Connections string example: 10,7,8 (where the numbers are the user_ids of who this user is following)
 
-		# Now, lets build our query to grab the posts
+		# Build our query to grab the posts
 		$q = "SELECT * 
 			 FROM posts 
 			 JOIN users USING (user_id)
