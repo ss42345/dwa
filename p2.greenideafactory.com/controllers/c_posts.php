@@ -130,7 +130,6 @@ class posts_controller extends base_controller {
 			# Set the message
 			$this->template->content->message = $this->user->first_name.", you are not following anyone yet.";
 			
-	
 			# Render view
 			echo $this->template;	
 		}
