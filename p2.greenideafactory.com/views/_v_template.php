@@ -41,8 +41,9 @@
 						<? if($user): ?>
 							<li><a href='/posts/users/'>Following</a></li>
 							<li><a href='/users/showall/'>All Users</a></li>
-							<li><a href='/posts/add'>New Post</a></li>
 							<li><a href='/posts/'>View Posts</a></li>
+							<li><a href='/posts/add'>New Post</a></li>
+							<li><a href='/posts/myposts'>My Posts</a></li>
 							<li><a href='/users/logout'>Logout</a></li>
 
 						<!-- Menu options for users who are not logged in -->	

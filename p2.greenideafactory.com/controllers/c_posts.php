@@ -121,23 +121,56 @@ class posts_controller extends base_controller {
 	
 		# Remove the final comma 
 		$connections_string = substr($connections_string, 0, -1);
-	
-		# Connections string example: 10,7,8 (where the numbers are the user_ids of who this user is following)
 
-		# Build our query to grab the posts
+		if(!$connections_string) {
+			# Reset the view
+			$this->template->content = View::instance('v_index_index');
+			$this->template->title   = "Message";
+
+			# Set the message
+			$this->template->content->message = $this->user->first_name.", you are not following anyone yet.";
+			
+	
+			# Render view
+			echo $this->template;	
+		}
+		else {
+			# Build our query to grab the posts
+			$q = "SELECT * 
+				 FROM posts 
+				 JOIN users USING (user_id)
+				 WHERE posts.user_id IN (".$connections_string.")"; # This is where we use that string of user_ids we created
+				
+			# Run our query, store the results in the variable $posts
+			$posts = DB::instance(DB_NAME)->select_rows($q);
+	
+			# Pass data to the view
+			$this->template->content->posts = $posts;
+	
+			# Render view
+			echo $this->template;
+		}
+	}
+	
+	public function myposts() {
+
+		# Set up view
+		$this->template->content = View::instance('v_posts_myposts');
+		$this->template->title   = "My Posts";
+	
+		# Build a query to grab posts from the user who is logged in
 		$q = "SELECT * 
 			 FROM posts 
-			 JOIN users USING (user_id)
-			 WHERE posts.user_id IN (".$connections_string.")"; # This is where we use that string of user_ids we created
+			 WHERE posts.user_id = ".$this->user->user_id;
 				
-		# Run our query, store the results in the variable $posts
-		$posts = DB::instance(DB_NAME)->select_rows($q);
+		# Run the query, store the results in the variable $posts
+		$myposts = DB::instance(DB_NAME)->select_rows($q);
 	
 		# Pass data to the view
-		$this->template->content->posts = $posts;
+		$this->template->content->myposts = $myposts;
 	
 		# Render view
 		echo $this->template;
 	
-	}	
+	}			
 }
