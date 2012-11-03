@@ -1,104 +1,88 @@
+body { 
+	font-family: 'Helvetica Neue', Arial, Sans-Serif; 
+	margin: 0;
+}
+
+.title.row { 
+	height: 25px; 
+	top: 0; 
+	background: lightgrey; 
+	text-align:center;
+}
+
+.header.row { 
+	height: 75px; 
+	top: 25px; 
+	background: grey;
+}
+table.subheader {
+	text-align:right;
+	background:lightgreen;
+	top:100 px;
+	left:0px;
+	right:0px;
+	height:75px;
+	position:absolute;
+	table-layout:auto;
+}
+.mainbody { 
+	border: 0px solid black;
+	top:100px;
+	bottom:50px;
+	left: 0px;
+	right: 0px;
+	position:absolute;
+	background: grey;	
+}
+.footer.row { 
+	height: 50px; 
+	bottom: 0; 
+	background:#696f77;
+}
+div.scroll {
+	background-color:lightgrey;
+	top:150 px;
+	left:250px;
+	right:0px;
+	height:380px;
+	position:absolute;
+	overflow:scroll;
+	padding-left:40px;
+}
+.messagewindow { 
+	bottom: 40px; 
+	left:40px; 
+	right:80px; 
+	height: 120px; 
+	background:white; 
+	position:absolute;
+	border-radius: 1em 1em 1em 1em ;
+}
+.postwindow { 
+	top: 40px; 
+	left:40px; 
+	right:80px; 
+	height: 160px; 
+	background:white; 
+	position:absolute;
+	border-radius: 1em 1em 1em 1em ;
+}
+
+.listview { padding: 0; margin: 0; font-weight: bold; color: #444; text-align:center}
+.listview li { list-style-type: none; background: #eee; padding: 1em; border-top: 1px solid #aaa; border-bottom: 1px solid #fff; cursor: pointer; }
+.listview li.selected { background-color: #37F; color: White; }
 	
-#left 
-{
-	float:left;
-}
-		
-#right 
-{
-	float:right;
-}
+.listview.inset { margin: 1em 0; }
+.listview.inset li { background: white; border: 2px solid #aaa; border-bottom-width: 0; }
+.listview.inset li:first-child { border-radius: 1em 1em 0em 0em }
+.listview.inset li:last-child { border-radius: 0em 0em 1em 1em; border-bottom-width: 2px; }
 
-#container
-{
-	text-align:center;
-	border:2px solid black;
-	width:960px;
-	height:1640px;
-	margin:0px auto;
-	background-color:rgb(162,209,251);
-	padding:30px;
-	background-clip: padding-box;
-	border-radius: 15px;
-}
-
-#header
-{
-	text-align:center;
-	background-color:rgb(119,186,36);
-	height:100px;
-	width:950px;
-	margin:0px auto;
-	border:0px solid black;	
-}
-
-#subheader
-{
-	text-align:center;
-	background-color:lightblue;
-	height:80px;
-	width:950px;
-	margin:0px auto;
-	border:0px solid black;
-}
-
-#mainbody
-{
-	background-color:rgb(218,234,145);	
-	width:950px;
-	margin:5px auto;
-	text-align:left;
-	padding:15px;	
-}
-
-#menu
-{
-	background-color:rgb(91,158,108);
-	height:300px;
-	width:140px;
-	float:left;
-	text-align:right;
-	margin:0px auto;
-	border:0px solid black;	
-	padding:15px;
-}
-
-#footer
-{
-	background-color:rgb(100,100,200);
-	clear:both;
-	text-align:center;
-}
-
-.content
-{
-	background-color:rgb(225,242,229);
-	height:500px;
-	width:800px;
-	float:left;
-	margin:0px auto;
-	border:0px solid black;
-	text-align:center;
-	padding:15px;
-}
-
-.right
-{
-	text-align:right;
-	margin:10px;
-}
-
-.column400 
-{
-	width:400px;
-}
-
-.column340 
-{
-	width:340px;
-}
-
-body
-{
-	background-image:url('/images/leaves.jpg');
-}
+.row, .col { overflow: hidden; position: absolute; }
+.row { left: 0; right: 0; }
+.col { top: 0; bottom: 0; }
+.scroll-x { overflow-x: auto; }
+.scroll-y { overflow-y: auto; }
+.left.col { width: 250px; }
+.right.col { left: 250px; right: 0; }
+.body.row { top: 75px; bottom: 50px; }
+.center { text-align:center;  }

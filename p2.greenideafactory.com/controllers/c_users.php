@@ -86,6 +86,10 @@ class users_controller extends base_controller {
 	
 		# For now, just confirm they've signed up - we can make this fancier later
 		# echo "You're signed up";	
+
+		# Send them to the main page
+		Router::redirect("/");
+		
 		
 	}	
 	public function p_login() {

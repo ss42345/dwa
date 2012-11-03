@@ -1,2 +1,1 @@
-<h1>Profile of </h1>
-<h2><?=$user->first_name?></h2>
+<h2>Welcome, you are now logged in as <?=$user->first_name?>!</h2>

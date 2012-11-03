@@ -18,56 +18,59 @@
 </head>
 
 <body>	
-
-	<div id="container">
-
-		<!-- Header -->
-		<div id="header">
-			<h1>
-				Green Idea Exchange Forum
-			</h1>
-		</div>
-	
-		<!-- SubHeader -->
-		<div>
-			<h2>
-			<table id="subheader">
-				<tr>
-  					<td><a href='/'>Home</a></td>
-  					<td><a href='/users/signup'>Sign up</a></td>
-	  				<td><a href='/users/login'>Log in</a></td>
-  					<td><a href='/users/logout'>Log out</a></td>
-				</tr>
-			</table>
-			</h2>
-		</div>
-
-		<!-- Left Menu -->
-		<div id="menu">
-	
-			<!-- Menu for users who are logged in -->
-			<? if($user): ?>
-			
-				<a href='/users/logout'>Logout</a><br>
-				<a href='/posts/users/'>Change who you're following</a><br>
-				<a href='/posts/'>View posts</a><br>
-				<a href='/posts/add'>Add a new post</a><br>
-		
-			<!-- Menu options for users who are not logged in -->	
-			<? else: ?>
-		
-				<a href='/users/signup'>Sign up</a>
-				<a href='/users/login'>Log in</a>
-		
-			<? endif; ?>
-		</div>
-
-		<!-- Main body -->
-		<div id="mainbody">
-			<?=$content;?> 
-		</div>
-
+	<!-- Title Row -->
+    <div class="title row">
 	</div>
+
+	<!-- Header -->
+    <div class="header row">
+    	<div class="left col center">
+    		<a href='/'><h3>Home</h3></a>
+    	</div>
+    	<div class="right col center">
+    	<h1>
+			Green Idea Exchange Forum
+		</h1>
+  	</div>
+    </div>
+ 
+    <div class="mainbody">
+        <div class="left col">
+                <ul class="listview">
+						<!-- Menu for users who are logged in -->
+						<? if($user): ?>
+							<li><a href='/posts/'>View posts</a></li>
+							<li><a href='/posts/users/'>Following</a></li>
+							<li><a href='/posts/users/'>Followers</a></li>
+							<li><a href='/posts/add'>Add a new post</a></li>
+							<li><a href='/users/logout'>Logout</a></li>
+
+						<!-- Menu options for users who are not logged in -->	
+						<? else: ?>
+		
+							<li><a href='/users/signup'>Sign up</a></li>
+							<li><a href='/users/login'>Log in</a></li>
+					
+						<? endif; ?>
+                </ul>
+	    </div>
+
+		<!-- Scrollable output window -->
+    	<div class="scroll">
+			<?=$content;?> 
+	    </div>
+
+    </div>
+ 
+    <div class="footer row">
+    	<div class="left col">
+    	</div>
+    	<div class="right col">
+    		<div>
+
+			</div>
+    	</div>
+    </div>
 	
 </body>
 
