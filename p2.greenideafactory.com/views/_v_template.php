@@ -39,10 +39,10 @@
                 <ul class="listview">
 						<!-- Menu for users who are logged in -->
 						<? if($user): ?>
-							<li><a href='/posts/'>View posts</a></li>
 							<li><a href='/posts/users/'>Following</a></li>
-							<li><a href='/posts/users/'>Followers</a></li>
-							<li><a href='/posts/add'>Add a new post</a></li>
+							<li><a href='/users/showall/'>All Users</a></li>
+							<li><a href='/posts/add'>New Post</a></li>
+							<li><a href='/posts/'>View Posts</a></li>
 							<li><a href='/users/logout'>Logout</a></li>
 
 						<!-- Menu options for users who are not logged in -->	

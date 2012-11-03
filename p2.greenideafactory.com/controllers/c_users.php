@@ -55,8 +55,9 @@ class users_controller extends base_controller {
 	public function profile() {
 		
 		if (!$this->user) {
-			echo "Members only. <a href='/users/login'>Login</a>";
-			
+			# Send them back to the main landing page
+			Router::redirect("/");
+	
 			# Return
 			return false;
 		}
@@ -67,6 +68,35 @@ class users_controller extends base_controller {
 		 
 		# Render template
 		echo $this->template;		 
+	}
+	
+	public function showall() {
+
+		# Show all users
+		if (!$this->user) {
+			# Send them back to the main landing page
+			Router::redirect("/");
+	
+			# Return
+			return false;
+		}
+
+		# Setup view
+		$this->template->content = View::instance('v_users_showall');
+		$this->template->title = "All users";
+		 
+		# Build a query of all the users 
+		$q = "SELECT * 
+			  FROM users";
+	
+		# Execute our query, storing the results in a variable $connections
+		$allusers = DB::instance(DB_NAME)->select_rows($q);
+		 
+		# Pass the data to the view
+		$this->template->content->allusers = $allusers;
+
+		# Render template
+		echo $this->template;		 	
 	}
 	
 	public function p_signup() {
@@ -125,8 +155,7 @@ class users_controller extends base_controller {
 			
 			# Send them to the main page
 			Router::redirect("/users/profile");
-		}
-				
+		}			
 	}
-		
+			
 } # end of the class
