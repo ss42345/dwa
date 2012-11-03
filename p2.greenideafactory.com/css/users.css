@@ -14,40 +14,53 @@
 	text-align:center;
 	border:2px solid black;
 	width:960px;
-	height:640px;
+	height:1640px;
 	margin:0px auto;
-	background-image:url('/images/paper-tile.png');
+	background-color:rgb(162,209,251);
 	padding:30px;
 	background-clip: padding-box;
 	border-radius: 15px;
 }
 
-#mainbody
-{
-	width:950px;
-	margin:0px auto;
-}
-
 #header
 {
 	text-align:center;
-	background-color:rgb(87,142,97);
+	background-color:rgb(119,186,36);
 	height:100px;
 	width:950px;
 	margin:0px auto;
 	border:0px solid black;	
 }
 
+#subheader
+{
+	text-align:center;
+	background-color:lightblue;
+	height:80px;
+	width:950px;
+	margin:0px auto;
+	border:0px solid black;
+}
+
+#mainbody
+{
+	background-color:rgb(218,234,145);	
+	width:950px;
+	margin:5px auto;
+	text-align:left;
+	padding:15px;	
+}
+
 #menu
 {
 	background-color:rgb(91,158,108);
-	height:490px;
+	height:300px;
 	width:140px;
 	float:left;
 	text-align:right;
 	margin:0px auto;
 	border:0px solid black;	
-	padding:5px;
+	padding:15px;
 }
 
 #footer
@@ -66,6 +79,7 @@
 	margin:0px auto;
 	border:0px solid black;
 	text-align:center;
+	padding:15px;
 }
 
 .right
@@ -82,4 +96,9 @@
 .column340 
 {
 	width:340px;
+}
+
+body
+{
+	background-image:url('/images/leaves.jpg');
 }
