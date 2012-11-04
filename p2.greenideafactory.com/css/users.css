@@ -32,19 +32,19 @@ table.subheader {
 	left: 0px;
 	right: 0px;
 	position:absolute;
-	background: grey;	
+	background: rgb(150,150,150);	
 }
 .footer.row { 
 	height: 50px; 
 	bottom: 0; 
-	background:#696f77;
+	background:grey;
 }
 div.scroll {
 	background-color:lightgrey;
 	top:150 px;
 	left:250px;
 	right:0px;
-	height:380px;
+	height:500px;
 	position:absolute;
 	overflow:scroll;
 	padding-left:40px;
