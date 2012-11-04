@@ -8,5 +8,5 @@
 	
 	<? endforeach; ?>
 <? else: ?>
-	<h3> There are no posts to view. </h3>
+	<h3> There are no posts from people you are following. </h3>
 <? endif; ?>

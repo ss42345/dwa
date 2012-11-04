@@ -95,7 +95,7 @@ class posts_controller extends base_controller {
 		DB::instance(DB_NAME)->insert('posts', $_POST);
 		
 		# Send them back
-		Router::redirect("/posts/index");	
+		Router::redirect("/posts/myposts");	
 	}
 	
 	public function index() {
