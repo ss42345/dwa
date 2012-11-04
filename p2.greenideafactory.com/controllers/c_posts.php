@@ -6,8 +6,22 @@ class posts_controller extends base_controller {
 		parent::__construct();
 		
 		# Make sure user is logged in if they want to use anything in this controller
-		if(!$this->user) {
-			die("Members only. <a href='/users/login'>Login</a>");
+		if(!isset($this->user)) {
+			$message = "Members only. Please <a href='/users/login'>login</a>";
+			#die($message);
+			#return false;
+			
+			# Reset the view
+			$this->template->content = View::instance('v_index_index');
+			$this->template->title   = "Message";
+
+			# Set the message
+			$this->template->content->message = $message;
+			
+			# Render view
+			echo $this->template;
+			
+			die();
 		}
 		
 	}
