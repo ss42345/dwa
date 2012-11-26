@@ -1,0 +1,63 @@
+
+ <html>
+    <head>
+        <title> Stock Trading Signals </title>
+
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+
+        <!-- CSS -->
+        <link rel="stylesheet" type="text/css" href="css/trading.css"/>
+
+        <!-- JQuery -->
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
+
+        <!-- JS -->
+        <!-- <script type="text/javascript" src="http://www.google.com/jsapi"></script> -->
+        <script type="text/javascript" src="js/stockdata.js"></script>
+        <script type="text/javascript" src="js/stockfunctions.js"></script>
+
+    </head>
+    <body>
+        <div id="stocksetup">
+            <br><br>
+            Stock:
+            <select id="StockSymbol">
+                <option value="apple">Apple (Ticker: AAPL)</option>
+                <option value="google">Google (Ticker: GOOG)</option>
+                <option value="microsoft">Microsoft (Ticker: MSFT)</option>
+                <option value="amazon">Amazon (Ticker: AMZN)</option>
+            </select>
+            <br>
+            <br><br><br>
+            <input type="checkbox" id="SMA">Simple Moving Average (SMA)</input>
+            <br>
+            SMA Period: <input type="text" id="SMAPeriod"> </input>
+            <br><br>
+            <input type="checkbox" id="EMA">Exponential Moving Average (EMA)</input>
+            <br>
+            EMA Priod: <input type="text" id="EMAPeriod"> </input>
+            <br><br>
+            <input type="checkbox" id="Stochastic">Stochastic</input>
+            <br>
+            First Period: <input type="text" id="StochasticPeriod1"> </input>
+            <br>
+            Second Period: <input type="text" id="StochasticPeriod2"> </input>
+            <br><br><br>
+            <input type="button" id="computebutton" value="Compute Trading Signals"/>
+        </div>
+        <div id="chartArea">
+        </div>
+        <div id="messageWindow">
+        </div>
+        <div class="result">
+            <div id="SMASignal"></div>
+            <div id="EMASignal"></div>
+            <div id="StochasticSignal"></div>
+        </div>
+
+
+    </body>
+</html>
