@@ -77,7 +77,7 @@ $(document).ready(function() { // start doc ready; do not delete this!
             $('#messageWindow').html('');
         }
         if (!useSMA && !useEMA && !useStochastic) {
-            $('#messageWindow').html('Please check the checkbox next to at least one trading signal');
+            DisplayMessage('Please check the checkbox next to at least one trading signal');
         }
     }
 
@@ -88,7 +88,7 @@ $(document).ready(function() { // start doc ready; do not delete this!
 
     function DisplayMessage(message){
         //console.log(message);
-        $('#messageWindow').html("<b>" + message + "</b>");
+        $('#messageWindow').html("<h4>Warning:</h4>" + message );
     }
 
     $('#StockSymbol').change(function() {
