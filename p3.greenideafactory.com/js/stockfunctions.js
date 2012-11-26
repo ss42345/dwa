@@ -66,11 +66,14 @@ $(document).ready(function() { // start doc ready; do not delete this!
         if (SMAPeriodValid && EMAPeriodValid && StochasticPeriod1Valid && StochasticPeriod2Valid) {
             $('#messageWindow').html('');
         }
+        if (!useSMA && !useEMA && !useStochastic) {
+            $('#messageWindow').html('Please check the checkbox next to at least one trading signal');
+        }
     }
 
     function DisplayInformation(message){
         //console.log(message);
-        $('#chartArea').html("<b>" + message + "</b>");
+        $('#chartArea').html("<h2>" + message + "</h2>");
     }
 
     function DisplayMessage(message){
@@ -116,11 +119,11 @@ $(document).ready(function() { // start doc ready; do not delete this!
         var sigSMA = ComputeLatestCrossover(stockData, gIdxClose, stockSMA);
         if (sigSMA.up) {
             // Sell signal
-            $('#SMASignal').html("<b>Sell at <i>" + sigSMA.price.toString() + "</i></b>!");
+            $('#SMASignal').html("<h3>SMA Signal:</h3><b>Sell at <i>$" + sigSMA.price.toString() + "</i></b>");
         }
         else {
             // Buy signal
-            $('#SMASignal').html("<b>Buy at <i>" + sigSMA.price.toString() + "</i></b>!");
+            $('#SMASignal').html("<h3>SMA Signal:</h3><b>Buy at <i>$" + sigSMA.price.toString() + "</i></b>");
         }
         if (debugging) {
             console.log("SMA");
@@ -154,11 +157,11 @@ $(document).ready(function() { // start doc ready; do not delete this!
         var sigEMA = ComputeLatestCrossover(stockData, gIdxClose, stockEMA);
         if (sigEMA.up) {
             // Sell signal
-            $('#EMASignal').html("<b>Sell at <i>" + sigEMA.price.toString() + "</i></b>!");
+            $('#EMASignal').html("<h3>EMA Signal:</h3><b>Sell at <i>$" + sigEMA.price.toString() + "</i></b>");
         }
         else {
             // Buy signal
-            $('#EMASignal').html("<b>Buy at <i>" + sigEMA.price.toString() + "</i></b>!");
+            $('#EMASignal').html("<h3>EMA Signal:</h3><b>Buy at <i>$" + sigEMA.price.toString() + "</i></b>");
         }
         if (debugging) {
             console.log("EMA");
@@ -201,26 +204,13 @@ $(document).ready(function() { // start doc ready; do not delete this!
         var price = stockData[sigStochastic.idx][gIdxClose];
         if (sigStochastic.up) {
             // Sell signal
-            $('#StochasticSignal').html("<b>Sell at <i>" + price.toString() + "</i></b>!");
+            $('#StochasticSignal').html("<h3>Stochastics Signal:</h3><b>Sell at <i>$" + price.toString() + "</i></b>");
         }
         else {
             // Buy signal
-            $('#StochasticSignal').html("<b>Buy at <i>" + price.toString() + "</i></b>!");
+            $('#StochasticSignal').html("<h3>Stochastics Signal:</h3><b>Buy at <i>$" + price.toString() + "</i></b>");
         }
     }
-
-    /**
-    if (debugging) {
-        console.log("SMA");
-        PrintToConsole(SMA_AAPL);
-        console.log("EMA");
-        PrintToConsole(EMA_AAPL);
-        console.log("Stochastic K");
-        PrintToConsole(stochastic.K);
-        console.log("Stochastic D");
-        PrintToConsole(stochastic.D);
-    }
-     **/
 
     //==============================================================
     //------------------ Computational Functions -------------------
