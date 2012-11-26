@@ -26,7 +26,17 @@ $(document).ready(function() { // start doc ready; do not delete this!
     $('#StochasticPeriod2').val(StochasticPeriod2);
 
     // Display information
-    DisplayInformation("Welcome to the Stock Trading Signal Wizard!");
+    DisplayInformation("<h2>Welcome to the Stock Trading Signal Wizard!</h2><br>" +
+                       "<h3>Steps to follow:</h3><br>" +
+                       "<ul>" +
+                        "<li> Select the stock</li>" +
+                        "<li> Check one or more trading signals </li>" +
+                        "<li> Select appropriate time period parameters for the chosen signal(s)</li>" +
+                        "<li> Click the 'Compute Trading Signals' button</li>" +
+                        "<li> Each signal will provide its buy or sell trading price on the right</li>" +
+                        "<li> Good luck and hope you make money trading!</li>" +
+                        "</ul>");
+
 
     // Compute Trading Signals Button Click
     $("#computebutton").click(function() {
@@ -73,7 +83,7 @@ $(document).ready(function() { // start doc ready; do not delete this!
 
     function DisplayInformation(message){
         //console.log(message);
-        $('#chartArea').html("<h2>" + message + "</h2>");
+        $('#chartArea').html(message);
     }
 
     function DisplayMessage(message){

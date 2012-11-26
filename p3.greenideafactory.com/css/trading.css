@@ -16,7 +16,7 @@ body {
     border:0px solid black;
 }
 #chartArea {
-    width:600px;
+    width:585px;
     height:500px;
     background: rgb(236, 244, 255);
     left:415px;
@@ -25,6 +25,7 @@ body {
     position: absolute;
     text-align: center;
     border-radius: 1em 1em 1em 1em ;
+    padding-left: 15px;
 }
 #messageWindow {
     width:600px;
@@ -90,6 +91,7 @@ body {
 }
 
 h3 {text-align: left}
+li {text-align: left}
 
 .listview { padding: 0; margin: 0; font-weight: bold; color: #444; text-align:center}
 .listview li { list-style-type: none; background: #eee; padding: 1em; border-top: 1px solid #aaa; border-bottom: 1px solid #fff; cursor: pointer; }
