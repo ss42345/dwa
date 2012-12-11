@@ -1,0 +1,1 @@
+<h2>Welcome, you are now logged in as <?=$user->first_name?>!</h2>
