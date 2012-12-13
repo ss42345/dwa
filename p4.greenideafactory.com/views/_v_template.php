@@ -23,7 +23,7 @@
 	
 </head>
 
-<body>	
+<body>
 	<!-- Title Row -->
     <div class="title row">
 	</div>
@@ -73,7 +73,6 @@
 			</div>
     	</div>
     </div>
-	
 </body>
 
 </html>

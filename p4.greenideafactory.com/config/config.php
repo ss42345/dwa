@@ -34,8 +34,9 @@ A email designated to receive messages from the server. Examples:
 # Default DB name for this app
 #	define('DB_NAME', "myapp_com"); 
 #	define('DB_NAME', "p2_greenideafactory_com");
-	define('DB_NAME', "greenide_p2_greenideafactory_com");
-	
+#	define('DB_NAME', "greenide_p2_greenideafactory_com");
+   define('DB_NAME', "greenide_p4_greenideafactory_com");
+
 # Timezone
 	define('TIMEZONE', 'America/New_York');
 
