@@ -184,4 +184,110 @@
 		["2012-11-23",239.89,240.00,236.48,239.88,1776800,239.88]
 	];
 
+    //alert("Inside ready() function of stockdata.js  ");
+
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart2);
+
+    function drawChart2() {
+
+        var data = google.visualization.arrayToDataTable([
+            ['Date','Price','SMA'],
+            ["2012-10-01",659.39, 659.39],
+            ["2012-10-02",661.31, 660.35],
+            ["2012-10-03",671.45, 664.05],
+            ["2012-10-04",666.80, 664.7375],
+            ["2012-10-05",652.59, 662.308],
+            ["2012-10-08",638.17, 658.285],
+            ["2012-10-09",635.85, 655.08],
+            ["2012-10-10",640.91, 653.30875],
+            ["2012-10-11",628.10, 650.5077778],
+            ["2012-10-12",629.71, 648.428],
+            ["2012-10-15",634.76, 645.965],
+            ["2012-10-16",649.79, 644.813],
+            ["2012-10-17",644.61, 642.129],
+            ["2012-10-18",632.64, 638.713],
+            ["2012-10-19",609.84, 634.438],
+            ["2012-10-22",634.03, 634.024],
+            ["2012-10-23",613.36, 631.775],
+            ["2012-10-24",616.83, 629.367],
+            ["2012-10-25",609.54, 627.511],
+            ["2012-10-26",604.00, 624.94],
+            ["2012-10-31",595.32, 620.996],
+            ["2012-11-01",596.54, 615.671],
+            ["2012-11-02",576.80, 608.89],
+            ["2012-11-05",584.62, 604.088],
+            ["2012-11-06",582.85, 601.389],
+            ["2012-11-07",558.00, 593.786],
+            ["2012-11-08",537.75, 586.225],
+            ["2012-11-09",547.06, 579.248],
+            ["2012-11-12",542.83, 572.577],
+            ["2012-11-13",542.90, 566.467],
+            ["2012-11-14",536.88, 560.623],
+            ["2012-11-15",525.62, 553.531],
+            ["2012-11-16",527.68, 548.619],
+            ["2012-11-19",565.73, 546.73],
+            ["2012-11-20",560.91, 544.536],
+            ["2012-11-21",561.70, 544.906],
+            ["2012-11-23",571.50, 548.281]
+        ]);
+        var options = {
+            title: 'Apple Stock History'
+        };
+
+        var jsonData = $.ajax({
+            url: "http://ichart.finance.yahoo.com/table.csv?s=MSFT&d=11&e=15&f=2012&g=d&a=2&b=13&c=1986&ignore=.csv",
+            dataType:"json",
+            async: false
+        }).responseText;
+        var data2 = new google.visualization.DataTable(jsonData);
+
+        var chart = new google.visualization.LineChart(document.getElementById('chartArea'));
+        chart.draw(data, options);
+
+        // (3) Third way to do this
+        //var wrap = new google.visualization.ChartWrapper({
+        //    'chartType':'LineChart',
+        //    'dataSourceUrl':'http://ichart.finance.yahoo.com/table.csv?s=MSFT&d=11&e=15&f=2012&g=d&a=2&b=13&c=1986&ignore=.csv',
+        //    'containerId':'visualization',
+        //    'options': {'title':'Population Density (people/km^2)', 'legend':'none'}
+        //});
+        //wrap.draw();
+
+        // (4) Fourth way to do this
+        $feed = 'http://ichart.finance.yahoo.com/table.csv?s=MSFT&d=11&e=15&f=2012&g=d&a=2&b=13&c=1986&ignore=.csv';
+        // Do it
+        //$data = csvToArray($feed, ',');
+
+        // Print it out as JSON
+        //echo json_encode($data);
+
+        // (5) Fifth way to do this
+        var yahoourl = 'http://ichart.finance.yahoo.com/table.csv?s=MSFT&d=11&e=15&f=2012&g=d&a=2&b=13&c=1986&ignore=.csv';
+        var data5 = $.get(yahoourl, function(stockdata){
+            alert("Data Loaded: " + stockdata);
+        })
+        .success(function() { alert("second success"); })
+        .error(function() { alert("error"); })
+        .complete(function() { alert("complete"); });
+
+
+    }
+
+    // Function to convert CSV into associative array
+    function csvToArray($file, $delimiter) {
+        if (($handle = fopen($file, 'r')) !== FALSE) {
+            $i = 0;
+            while (($lineArray = fgetcsv($handle, 4000, $delimiter, '"')) !== FALSE) {
+                for ($j = 0; $j < count($lineArray); $j++) {
+                    $arr[$i][$j] = $lineArray[$j];
+                }
+                $i++;
+            }
+            fclose($handle);
+        }
+        return $arr;
+    }
+
+
 //}); // end doc ready; do not delete this!

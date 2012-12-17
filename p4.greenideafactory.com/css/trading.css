@@ -16,7 +16,7 @@ body {
     border:0px solid black;
 }
 #chartArea {
-    width:585px;
+    width:600px;
     height:500px;
     background: rgb(236, 244, 255);
     left:415px;
@@ -25,7 +25,7 @@ body {
     position: absolute;
     text-align: center;
     border-radius: 1em 1em 1em 1em ;
-    padding-left: 15px;
+    /*padding-left: 15px;*/
 }
 #messageWindow {
     width:585px;

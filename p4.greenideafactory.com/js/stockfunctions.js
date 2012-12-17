@@ -8,7 +8,7 @@ $(document).ready(function() { // start doc ready; do not delete this!
     var StochasticPeriod2 = 5;
 
     var stockSelected = 'apple';
-    var stockData = AAPLdata;
+    var stockData = '';//AAPLdata;
 
     var useSMA = false;
     var useEMA = false;
@@ -26,6 +26,7 @@ $(document).ready(function() { // start doc ready; do not delete this!
     $('#StochasticPeriod2').val(StochasticPeriod2);
 
     // Display information
+    /**/
     DisplayInformation("<h2>Welcome to the Stock Trading Signal Wizard!</h2><br>" +
                        "<h3>Steps to follow:</h3><br>" +
                        "<ul>" +
@@ -36,7 +37,7 @@ $(document).ready(function() { // start doc ready; do not delete this!
                         "<li> Each signal will provide its buy or sell trading price on the right</li>" +
                         "<li> Good luck and hope you make money trading!</li>" +
                         "</ul>");
-
+    /**/
 
     // Compute Trading Signals Button Click
     $("#computebutton").click(function() {

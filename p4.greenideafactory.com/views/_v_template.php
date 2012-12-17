@@ -9,7 +9,9 @@
 	<!---
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="http://www.google.com/jsapi"></script>
 	--->
+    <script src="/js/jsapi.js"></script>
     <script src="/js/jquery-1.8.3.min.js"></script>
     <script src="/js/stockfunctions.js"></script>
     <script src="/js/stockdata.js"></script>
@@ -46,6 +48,8 @@
 						<!-- Menu for users who are logged in -->
 						<? if($user): ?>
 							<li><a href='/users/logout'>Logout</a></li>
+                            <li><a href='/stocks/add'>Add Stock to Watchlist</a></li>
+                            <li><a href='/stocks/remove'>Remove Stock from Watchlist</a></li>
 
 						<!-- Menu options for users who are not logged in -->	
 						<? else: ?>
