@@ -115,7 +115,7 @@ class users_controller extends base_controller {
 		$user_id = DB::instance(DB_NAME)->insert("users", $_POST);
 	
 		# For now, just confirm they've signed up - we can make this fancier later
-		echo "You're signed up";
+		#echo "You're signed up";
 
 		# Send them to the main page
 		Router::redirect("/");
