@@ -100,7 +100,9 @@ class users_controller extends base_controller {
 	}
 	
 	public function p_signup() {
-		
+
+        echo "Inside p_signup()";
+
 		# Encrypt the password
 		$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
 		
