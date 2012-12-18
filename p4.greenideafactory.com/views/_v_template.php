@@ -48,8 +48,8 @@
 						<!-- Menu for users who are logged in -->
 						<? if($user): ?>
 							<li><a href='/users/logout'>Logout</a></li>
-                            <li><a href='/stocks/add'>Add Stock to Watchlist</a></li>
-                            <li><a href='/stocks/remove'>Remove Stock from Watchlist</a></li>
+                            <li><a href='/stocks/add'>Trading Signals</a></li>
+                            <li><a href='/stocks/remove'>Manage Watchlist</a></li>
 
 						<!-- Menu options for users who are not logged in -->	
 						<? else: ?>

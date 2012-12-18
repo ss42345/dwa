@@ -34,51 +34,99 @@ class stocks_controller extends base_controller {
 			
 		# Render template
 		echo $this->template;
-	
 	}
 
     public function p_add() {
+        # Search the database for the stock
+        $q = "SELECT *
+					 FROM stocks
+					 WHERE stock = '".$_POST['stock']."'
+					 AND stocks.user_id = ".$this->user->user_id;
 
-        # Associate this stock with this user
-        $_POST['user_id']  = $this->user->user_id;
+        $stock = DB::instance(DB_NAME)->select_field($q);
 
-        # Unix timestamp of when this post was created / modified
-        $_POST['created']  = Time::now();
-        $_POST['modified'] = Time::now();
+        # Check if we found the stock => update it.
+        if (!$stock) {
+            # Associate this stock with this user
+            $_POST['user_id']  = $this->user->user_id;
 
-        # Insert
-        # Note we didn't have to sanitize any of the $_POST data because we're using the insert method which does it for us
-        DB::instance(DB_NAME)->insert('stocks', $_POST);
+            # Unix timestamp of when this post was created / modified
+            $_POST['created']  = Time::now();
+            $_POST['modified'] = Time::now();
+
+            # Insert
+            # Note we didn't have to sanitize any of the $_POST data because we're using the insert method which does it for us
+            DB::instance(DB_NAME)->insert('stocks', $_POST);
+        }
+        else {
+            $q2 = "UPDATE stocks
+                        SET DataPeriod = '".$_POST['DataPeriod']."',
+                        SMAPeriod  = ".$_POST['SMAPeriod'].",
+                        EMAPeriod  = ".$_POST['EMAPeriod'].",
+                        StochasticPeriod1 = ".$_POST['StochasticPeriod1'].",
+                        StochasticPeriod2 = ".$_POST['StochasticPeriod2']."
+                   ";
+
+            DB::instance(DB_NAME)->query($q2);
+        }
 
         # Send them back
         Router::redirect("/stocks/mystocks");
     }
 
     public function remove() {
-
         # Setup view
         $this->template->content = View::instance('v_stocks_remove');
-        $this->template->title   = "Remove a stock from the watchlist";
+        $this->template->title   = "Remove Stocks from Watchlist";
+
+        # Build the query
+        $q = "SELECT *
+			 FROM stocks
+			 WHERE stocks.user_id = ".$this->user->user_id;
+
+        # Run the query
+        $mystocks = DB::instance(DB_NAME)->select_rows($q);
+
+        # Pass the data to the view
+        $this->template->content->mystocks = $mystocks;
 
         # Render template
         echo $this->template;
-
     }
 
-    public function p_remove() {
+    public function remove_stock($stock_id_to_remove) {
 
-        # Build the query
-
-        # Run the query
+        # Delete this connection
+        $where_condition = 'WHERE user_id = '.$this->user->user_id.' AND stock_id = '.$stock_id_to_remove;
+        DB::instance(DB_NAME)->delete('stocks', $where_condition);
 
         # Send them back
         Router::redirect("/stocks/mystocks");
     }
 
+    public function p_remove() {
+
+        $where_condition = "WHERE stocks.user_id = ".$this->user->user_id." AND (";
+        if (isset($_POST['remove_stocks'])) {
+            foreach ($_POST['remove_stocks'] as $remstock) {
+                $where_condition .= " stock = '".$remstock."' OR";
+            }
+        }
+
+        # Remove the final OR
+        $where_condition = substr($where_condition, 0, -3);
+        $where_condition = $where_condition.")";
+
+        DB::instance(DB_NAME)->delete('stocks', $where_condition);
+
+        # Send them back
+        Router::redirect("/stocks/remove");
+    }
+
     public function mystocks() {
 
         # Set up view
-        $this->template->content = View::instance('v_posts_mystocks');
+        $this->template->content = View::instance('v_stocks_mystocks');
         $this->template->title   = "My Stocks";
 
         # Build a query to grab stocks from the user who is logged in
@@ -86,17 +134,26 @@ class stocks_controller extends base_controller {
 			 FROM stocks
 			 WHERE stocks.user_id = ".$this->user->user_id;
 
-        # Run the query, store the results in the variable $posts
+        # Run the query, store the results in the variable $mystocks
         $mystocks = DB::instance(DB_NAME)->select_rows($q);
 
         # Pass data to the view
-        $this->template->content->myposts = $mystocks;
+        $this->template->content->mystocks = $mystocks;
 
         # Render view
         echo $this->template;
 
     }
 
+    public function getstockdata() {
+        $url = '';
+        $results = Utils::curl($url);
+
+        $results = array_map("str_getcsv", preg_split('/\r*\n+|\r+/', $results));
+
+        # Debug the results
+        echo Debug::dump($results,"");
+    }
     /*** Not needed ***
 	public function users() {
 

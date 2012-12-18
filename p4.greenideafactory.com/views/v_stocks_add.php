@@ -1,13 +1,30 @@
 <form method='POST' action='/stocks/p_add'>
 
-	<strong>New Stock:</strong><br>
-    Select Stock:
-    <select id="StockSymbol">
-        <option value="apple">Apple (Ticker: AAPL)</option>
-        <option value="google">Google (Ticker: GOOG)</option>
-        <option value="microsoft">Microsoft (Ticker: MSFT)</option>
-        <option value="amazon">Amazon (Ticker: AMZN)</option>
+    <?
+    $SMAPeriod = 10;
+    $EMAPeriod = 10;
+    $StochasticPeriod1 = 14;
+    $StochasticPeriod2 = 5;
+    ?>
+
+    <!-- Initialize the form fields -->
+    <script>
+    $(":input[name='SMAPeriod']").val($SMAPeriod);
+    $(":input[name='EMAPeriod']").val($EMAPeriod);
+    $(":input[name='StochasticPeriod1']").val($StochasticPeriod1);
+    $(":input[name='StochasticPeriod2']").val($StochasticPeriod2);
+    </script>
+
+    <strong>Enter Stock Ticker Symbol:</strong>
+    <input type="text" name="stock"/>
+    <br><br>
+    Select Time Period:
+    <select name="DataPeriod">
+        <option value="one_month">One Month</option>
+        <option value="three_months">Three Months</option>
+        <option value="six_months">Six Months</option>
     </select>
+    <br><br>
 
     <table bgcolor=#87ceeb>
 
@@ -17,7 +34,7 @@
         </tr>
         <tr>
             <td>SMA Period:</td>
-            <td><input type="text" id="SMAPeriod"/> </td>
+            <td><input type="text" name="SMAPeriod"/> </td>
         </tr>
         <tr>
             <td> </td>
@@ -29,7 +46,7 @@
         </tr>
         <tr>
             <td>EMA Period:</td>
-            <td><input type="text" id="EMAPeriod"/></td>
+            <td><input type="text" name="EMAPeriod"/></td>
         </tr>
         <tr>
             <td> </td>
@@ -41,11 +58,11 @@
         </tr>
         <tr>
             <td>First Period:</td>
-            <td><input type="text" id="StochasticPeriod1"/></td>
+            <td><input type="text" name="StochasticPeriod1"/></td>
         </tr>
         <tr>
             <td>Second Period:</td>
-            <td><input type="text" id="StochasticPeriod2"> </td>
+            <td><input type="text" name="StochasticPeriod2"> </td>
         </tr>
 
     </table>
@@ -55,7 +72,7 @@
             <input type="button" id="computebutton" value="Compute Trading Signals"/>
         </tr>
         <tr>
-            <input type="submit" value="Add Stock">
+            <input type="submit" value="Add to Watchlist">
         </tr>
     </table>
     <div id="chartArea">
