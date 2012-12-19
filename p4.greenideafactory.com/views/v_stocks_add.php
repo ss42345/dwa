@@ -1,22 +1,7 @@
 <form method='POST' action='/stocks/p_add'>
 
-    <?
-    $SMAPeriod = 10;
-    $EMAPeriod = 10;
-    $StochasticPeriod1 = 14;
-    $StochasticPeriod2 = 5;
-    ?>
-
-    <!-- Initialize the form fields -->
-    <script>
-    $(":input[name='SMAPeriod']").val($SMAPeriod);
-    $(":input[name='EMAPeriod']").val($EMAPeriod);
-    $(":input[name='StochasticPeriod1']").val($StochasticPeriod1);
-    $(":input[name='StochasticPeriod2']").val($StochasticPeriod2);
-    </script>
-
     <strong>Enter Stock Ticker Symbol:</strong>
-    <input type="text" name="stock"/>
+    <input type="text" name="stock" id="StockSymbol"/>
     <br><br>
     Select Time Period:
     <select name="DataPeriod">
@@ -34,7 +19,7 @@
         </tr>
         <tr>
             <td>SMA Period:</td>
-            <td><input type="text" name="SMAPeriod"/> </td>
+            <td><input type="text" name="SMAPeriod" id="SMAPeriod"/> </td>
         </tr>
         <tr>
             <td> </td>
@@ -46,7 +31,7 @@
         </tr>
         <tr>
             <td>EMA Period:</td>
-            <td><input type="text" name="EMAPeriod"/></td>
+            <td><input type="text" name="EMAPeriod" id="EMAPeriod"/></td>
         </tr>
         <tr>
             <td> </td>
@@ -58,11 +43,11 @@
         </tr>
         <tr>
             <td>First Period:</td>
-            <td><input type="text" name="StochasticPeriod1"/></td>
+            <td><input type="text" name="StochasticPeriod1" id="StochasticPeriod1"/></td>
         </tr>
         <tr>
             <td>Second Period:</td>
-            <td><input type="text" name="StochasticPeriod2"> </td>
+            <td><input type="text" name="StochasticPeriod2" id="StochasticPeriod2"/> </td>
         </tr>
 
     </table>
@@ -73,6 +58,10 @@
         </tr>
         <tr>
             <input type="submit" value="Add to Watchlist">
+        </tr>
+        <tr>
+            <br>
+            <a href="/stocks/getstockdata">Get Data</a>
         </tr>
     </table>
     <div id="chartArea">

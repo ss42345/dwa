@@ -31,8 +31,18 @@ class stocks_controller extends base_controller {
 		# Setup view
 		$this->template->content = View::instance('v_stocks_add');
 		$this->template->title   = "Add new stock to the watchlist";
-			
-		# Render template
+
+        # If this view needs any JS or CSS files, add their paths to this array so they will get loaded in the head
+        $client_files = Array(
+            "/js/jquery-1.8.3.min.js",
+            "/js/jsapi.js",
+            "/js/stockfunctions.js",
+            "/js/stockdata.js",
+        );
+
+        $this->template->client_files = Utils::load_client_files($client_files);
+
+        # Render template
 		echo $this->template;
 	}
 
@@ -94,6 +104,7 @@ class stocks_controller extends base_controller {
         echo $this->template;
     }
 
+    /**
     public function remove_stock($stock_id_to_remove) {
 
         # Delete this connection
@@ -103,6 +114,7 @@ class stocks_controller extends base_controller {
         # Send them back
         Router::redirect("/stocks/mystocks");
     }
+    **/
 
     public function p_remove() {
 
@@ -113,7 +125,7 @@ class stocks_controller extends base_controller {
             }
         }
 
-        # Remove the final OR
+        # Remove the final OR and add a closing parenthesis
         $where_condition = substr($where_condition, 0, -3);
         $where_condition = $where_condition.")";
 
@@ -146,14 +158,18 @@ class stocks_controller extends base_controller {
     }
 
     public function getstockdata() {
-        $url = '';
+        $url = 'http://ichart.finance.yahoo.com/table.csv?s=MSFT&d=11&e=15&f=2012&g=d&a=10&b=13&c=2012&ignore=.csv';
         $results = Utils::curl($url);
 
         $results = array_map("str_getcsv", preg_split('/\r*\n+|\r+/', $results));
 
         # Debug the results
-        echo Debug::dump($results,"");
+        #echo Debug::dump($results,"xxxx");
+        #var_dump($results);
+        print_r($results);
+        return $results;
     }
+
     /*** Not needed ***
 	public function users() {
 

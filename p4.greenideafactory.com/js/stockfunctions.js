@@ -1,5 +1,7 @@
 $(document).ready(function() { // start doc ready; do not delete this!
 
+    //alert("Inside stockfunctions document");
+
     var debugging = true;
 
     var SMAPeriod = 10;
@@ -41,18 +43,19 @@ $(document).ready(function() { // start doc ready; do not delete this!
 
     // Compute Trading Signals Button Click
     $("#computebutton").click(function() {
-        stockSelected = $('#StockSymbol').val();
-        switch (stockSelected) {
-            case 'apple':
+        console.log("Button clicked")
+        stockTicker = $('#StockSymbol').val();
+        switch (stockTicker) {
+            case 'AAPL':
                 stockData = AAPLdata;
                 break;
-            case 'google':
+            case 'GOOG':
                 stockData = GOOGdata;
                 break;
-            case 'microsoft':
+            case 'MSFT':
                 stockData = MSFTdata;
                 break;
-            case 'amazon':
+            case 'AMZN':
                 stockData = AMZNdata;
                 break;
         }
@@ -140,6 +143,7 @@ $(document).ready(function() { // start doc ready; do not delete this!
             console.log("SMA");
             PrintToConsole(stockSMA);
         }
+        drawStockChart(stockData);
     }
 
     //-----------------------------------------------

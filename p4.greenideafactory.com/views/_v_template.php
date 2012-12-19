@@ -3,23 +3,26 @@
 <head>
 	<title><?=@$title; ?></title>
 
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
-	
-	<!-- JS -->
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="/css/users.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/trading.css"/>
+
+    <!-- JS -->
 	<!---
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="http://www.google.com/jsapi"></script>
 	--->
+
+    <!--- Local version of the JS files ----
     <script src="/js/jsapi.js"></script>
     <script src="/js/jquery-1.8.3.min.js"></script>
     <script src="/js/stockfunctions.js"></script>
     <script src="/js/stockdata.js"></script>
+    ---->
 
-	<!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="/css/users.css"/>
-	<link rel="stylesheet" type="text/css" href="/css/trading.css"/>
-					
 	<!-- Controller Specific JS/CSS -->
 	<?=@$client_files; ?>
 	

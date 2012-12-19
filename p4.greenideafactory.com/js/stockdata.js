@@ -232,7 +232,7 @@
             ["2012-11-23",571.50, 548.281]
         ]);
         var options = {
-            title: 'Apple Stock History'
+            title: 'Apple xxx Stock History'
         };
 
         var jsonData = $.ajax({
@@ -263,15 +263,28 @@
         //echo json_encode($data);
 
         // (5) Fifth way to do this
-        var yahoourl = 'http://ichart.finance.yahoo.com/table.csv?s=MSFT&d=11&e=15&f=2012&g=d&a=2&b=13&c=1986&ignore=.csv';
-        var data5 = $.get(yahoourl, function(stockdata){
-            alert("Data Loaded: " + stockdata);
-        })
-        .success(function() { alert("second success"); })
-        .error(function() { alert("error"); })
-        .complete(function() { alert("complete"); });
+        //var yahoourl = 'http://ichart.finance.yahoo.com/table.csv?s=MSFT&d=11&e=15&f=2012&g=d&a=2&b=13&c=1986&ignore=.csv';
+        //var data5 = $.get(yahoourl, function(stockdata){
+        //    alert("Data Loaded: " + stockdata);
+        //})
+        //.success(function() { alert("second success"); })
+        //.error(function() { alert("error"); })
+        //.complete(function() { alert("complete"); });
+    }
 
+    function drawStockChart(stockdata) {
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawChartLocal);
 
+        function drawChartLocal() {
+
+            var data = google.visualization.arrayToDataTable(stockdata);
+            var options = {
+                title: 'Stock History'
+            };
+            var chart = new google.visualization.LineChart(document.getElementById('chartArea'));
+            chart.draw(data, options);
+        }
     }
 
     // Function to convert CSV into associative array
