@@ -53,8 +53,9 @@
 
     function drawStockChart(stockdataIn, legendArrayIn) {
         var dataIn = google.visualization.arrayToDataTable(stockdataIn);
+        var stockSymbol = $('#StockSymbol').val();
         var options = {
-            title: 'Stock History'
+            title: stockSymbol + ' Stock Chart'
         };
 
         // Add legend

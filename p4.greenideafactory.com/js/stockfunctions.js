@@ -17,17 +17,19 @@ $(document).ready(function() { // start doc ready; do not delete this!
     var gIdxClose = 4;
     var gIdxVolume = 5;
     var gIdxAdjClose = 6;
-    var gCurrentStockData;
-    var gCurrentPriceData;
-    var gCurrentPriceLegend;
-    var gCurrentPlotData;
-    var gCurrentPlotLegend;
-    var gLegendArray;
+    var gCurrentStockData = new Array();
+    var gCurrentPriceData = new Array();
+    var gCurrentPriceLegend = new Array();
+    var gCurrentPlotData  = new Array();
+    var gCurrentPlotLegend = new Array();
+    var gLegendArray = new Array();
 
     var useSMA = false;
     var useEMA = false;
     var useStochastic = false;
 
+    var SymbolValid = true;
+    var StockDataValid = true;
     var SMAPeriodValid = true;
     var EMAPeriodValid = true;
     var StochasticPeriod1Valid = true;
@@ -39,34 +41,39 @@ $(document).ready(function() { // start doc ready; do not delete this!
     $('#StochasticPeriod1').val(StochasticPeriod1);
     $('#StochasticPeriod2').val(StochasticPeriod2);
 
-    // Display information
-    /**/
-    DisplayInformation("<h2>Welcome to the Stock Trading Signal Wizard!</h2><br>" +
-                       "<h3>Steps to follow:</h3><br>" +
-                       "<ul>" +
-                        "<li> Select the stock</li>" +
-                        "<li> Check one or more trading signals </li>" +
-                        "<li> Select appropriate time period parameters for the chosen signal(s)</li>" +
-                        "<li> Click the 'Compute Trading Signals' button</li>" +
-                        "<li> Each signal will provide its buy or sell trading price on the right</li>" +
-                        "<li> Good luck and hope you make money trading!</li>" +
-                        "</ul>");
-    /**/
-
     // Compute Trading Signals Button Click
     $("#computebutton").click(function() {
+
+        SymbolValid = true;
+        StockDataValid = true;
+        var stockSymbol = $('#StockSymbol').val();
+        var retVal = ValidateStockSymbol(stockSymbol);
+        if (!retVal.valid) {
+            $('#StockSymbol').css("background-color","pink");
+            DisplayMessage(retVal.msg);
+            SymbolValid = false;
+            return false;
+        }
+        else {
+            $('#StockSymbol').css("background-color","white");
+        }
+
+        if (gCurrentPriceData.length == 0) {
+            DisplayMessage("First get the stock data before computing trading signals.")
+            return false;
+        }
 
         // Clear any existing data
         ClearAllResults();
 
         // Compute trading signals
-        if (useSMA && SMAPeriodValid) {
+        if (SymbolValid && StockDataValid && useSMA && SMAPeriodValid) {
             RefreshSMAResults();
         }
-        if (useEMA && EMAPeriodValid) {
+        if (SymbolValid && StockDataValid && useEMA && EMAPeriodValid) {
             RefreshEMAResults();
         }
-        if (useStochastic && StochasticPeriod1Valid && StochasticPeriod2Valid) {
+        if (SymbolValid && StockDataValid && useStochastic && StochasticPeriod1Valid && StochasticPeriod2Valid) {
             RefreshStochasticResults();
         }
     });
@@ -75,7 +82,7 @@ $(document).ready(function() { // start doc ready; do not delete this!
         //$('#SMASignal').html('');
         //$('#EMASignal').html('');
         //$('#StochasticSignal').html('');
-        if (SMAPeriodValid && EMAPeriodValid && StochasticPeriod1Valid && StochasticPeriod2Valid) {
+        if (SymbolValid && StockDataValid && SMAPeriodValid && EMAPeriodValid && StochasticPeriod1Valid && StochasticPeriod2Valid) {
             $('#messageWindow').html('');
         }
         if (!useSMA && !useEMA && !useStochastic) {
@@ -120,18 +127,65 @@ $(document).ready(function() { // start doc ready; do not delete this!
         return quoteString;
     }
 
+    // Adding to watch list
+    $("#addtowatchlist").click(function() {
+        SymbolValid = true;
+        StockDataValid = true;
+        var stockSymbol = $('#StockSymbol').val();
+        var retVal = ValidateStockSymbol(stockSymbol);
+        if (!retVal.valid) {
+            $('#StockSymbol').css("background-color","pink");
+            DisplayMessage(retVal.msg);
+            SymbolValid = false;
+            return false;
+        }
+        else {
+            $('#StockSymbol').css("background-color","white");
+        }
+
+        if (gCurrentPriceData.length == 0) {
+            DisplayMessage("First get the stock data before adding the stock to the watch list.")
+            return false;
+        }
+    })
+
     // User clicks on the getStockData button
     $("#getstockdata").click(function() {
 
+        // Clear any existing data
+        $('#messageWindow').html('');
+
+        SymbolValid = true;
+        StockDataValid = true;
+        var stockSymbol = $('#StockSymbol').val();
+        var retVal = ValidateStockSymbol(stockSymbol);
+        if (!retVal.valid) {
+            $('#StockSymbol').css("background-color","pink");
+            DisplayMessage(retVal.msg);
+            SymbolValid = false;
+            return;
+        }
+        else {
+            $('#StockSymbol').css("background-color","white");
+        }
+
         var quoteString = getQuoteString();
 
-        $("#StockDataHolder").load("/stocks/getstockdata/"+quoteString, function(responseText, statusText, xhr)
-            {
-                alert(statusText);
-
+        $("#StockDataHolder").load("/stocks/getstockdata/"+quoteString, function(responseText, statusText, xhr) {
                 if (statusText == "success") {
                     // Get the stock data as a js array, and legend array.
                     // Also set the global variable
+                    if ((responseText.search(/not/i) >= 0) ||
+                        (responseText.search(/error/i) >= 0) ||
+                        (responseText.search(/yahoo/i) >= 0) ||
+                        (responseText.search(/found/i) >= 0 )) {
+
+                        StockDataValid = false;
+                        DisplayMessage("Failed to retrieve stock data");
+                        $('#StockSymbol').css("background-color","pink");
+                        return;
+                    }
+
                     var jsArray = new Array();
                     var legendArray = new Array();
                     ConvertToJSArray(responseText, jsArray, legendArray);
@@ -146,8 +200,8 @@ $(document).ready(function() { // start doc ready; do not delete this!
 
                 if (statusText == "error")
                     alert("Ajax - Error"+xhr.status+":"+xhr.statusText);
-            }
-        )
+        })
+        $("#StockDataHolder").hide();
     });
 
     // This function converts the input data in text format to JS array format
@@ -249,17 +303,42 @@ $(document).ready(function() { // start doc ready; do not delete this!
     }
 
     $('#StockSymbol').change(function() {
-        // Reset any variables
+        SymbolValid = true;
+        stockSymbol = $(this).val();
+        var retVal = ValidateStockSymbol(stockSymbol);
+        if (!retVal.valid) {
+            $('#StockSymbol').css("background-color","pink");
+            DisplayMessage(retVal.msg);
+            SymbolValid = false;
+        }
+        else {
+            // Clear existing messages
+            $('#messageWindow').html('');
+            $('#StockSymbol').css("background-color","white");
+        }
     })
 
-    function ValidatePeriod(period){
+    function ValidateStockSymbol(symbol){
+        var isValid = true;
+        if (symbol.length == 0 || symbol.length > 6) {
+            isValid = false;
+            message = "Enter a valid stock ticker symbol";
+        }
+        else if (symbol.search("[\\s\\W]+") >= 0) {
+            var message = "Enter a valid stock ticker symbol";
+            isValid = false;
+        }
+        return {valid: isValid, msg: message}
+    }
+
+    function ValidatePeriod(name, period){
         var isValid = true;
         if (isNaN(period)) {
             isValid = false;
             message = "Enter a valid number";
         }
         else if (period <= 1 || period > gCurrentStockData.length) {
-            var message = "Enter a valid number between 2 and " + gCurrentStockData.length.toString();
+            var message = name + ": Enter a valid number between 2 and " + gCurrentStockData.length.toString();
             isValid = false;
         }
         return {valid: isValid, msg: message}
@@ -274,10 +353,14 @@ $(document).ready(function() { // start doc ready; do not delete this!
     $('#SMAPeriod').change(function() {
         SMAPeriodValid = true;
         SMAPeriod = $(this).val();
-        var retVal = ValidatePeriod(SMAPeriod);
+        var retVal = ValidatePeriod("SMAPeriod",SMAPeriod);
         if (!retVal.valid) {
+            $('#SMAPeriod').css("background-color","pink");
             DisplayMessage(retVal.msg);
             SMAPeriodValid = false;
+        }
+        else {
+            $('#SMAPeriod').css("background-color","white");
         }
     });
 
@@ -322,10 +405,14 @@ $(document).ready(function() { // start doc ready; do not delete this!
     $('#EMAPeriod').change(function() {
         EMAPeriodValid = true;
         EMAPeriod = $(this).val();
-        var retVal = ValidatePeriod(EMAPeriod);
+        var retVal = ValidatePeriod("EMAPeriod",EMAPeriod);
         if (!retVal.valid) {
+            $('#EMAPeriod').css("background-color","pink");
             DisplayMessage(retVal.msg);
             EMAPeriodValid = false;
+        }
+        else {
+            $('#EMAPeriod').css("background-color","white");
         }
     });
 
@@ -373,20 +460,28 @@ $(document).ready(function() { // start doc ready; do not delete this!
     $('#StochasticPeriod1').change(function() {
         StochasticPeriod1Valid = true;
         StochasticPeriod1 = $(this).val();
-        var retVal = ValidatePeriod(StochasticPeriod1);
+        var retVal = ValidatePeriod("StochasticPeriod1",StochasticPeriod1);
         if (!retVal.valid) {
+            $('#StochasticPeriod1').css("background-color","pink");
             DisplayMessage(retVal.msg);
             StochasticPeriod1Valid = false;
+        }
+        else {
+            $('#StochasticPeriod1').css("background-color","white");
         }
     });
 
     $('#StochasticPeriod2').change(function() {
         StochasticPeriod2Valid = true;
         StochasticPeriod2 = $(this).val();
-        var retVal = ValidatePeriod(StochasticPeriod2);
+        var retVal = ValidatePeriod("StochasticPeriod2",StochasticPeriod2);
         if (!retVal.valid) {
+            $('#StochasticPeriod2').css("background-color","pink");
             DisplayMessage(retVal.msg);
             StochasticPeriod2Valid = false;
+        }
+        else {
+            $('#StochasticPeriod2').css("background-color","white");
         }
     });
 

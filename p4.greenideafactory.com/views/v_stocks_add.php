@@ -62,10 +62,22 @@
             <input type="button" id="computebutton" value="Compute Trading Signals"/>
         </tr>
         <tr>
-            <input type="submit" value="Add to Watchlist">
+            <input type="submit" id="addtowatchlist" value="Add to Watch list">
         </tr>
     </table>
     <div id="chartArea">
+        <h3>&nbsp;&nbsp;&nbsp;Steps to follow:</h3><br>
+        <ul>
+        <li> Enter the stock ticker symbol</li>
+        <li> Select the time period</li>
+        <li> Click the "Get Stock Data" button to retrieve the price history of the stock and to plot it</li>
+        <li> Check one or more trading signals </li>
+        <li> Select appropriate time period parameters for the chosen signal(s)</li>
+        <li> Click the "Compute Trading Signals" button</li>
+        <li> Each signal will provide its buy or sell trading price in the message window</li>
+        <li> Good luck and hope you make money trading!</li>
+        </ul>
+
     </div>
     <table>
         <div id="messageWindow">
