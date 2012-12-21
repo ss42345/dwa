@@ -523,7 +523,7 @@ $(document).ready(function() { // start doc ready; do not delete this!
         else {
             // Buy signal
             //$('#StochasticSignal').html("<h3>Stochastics Signal:</h3><b>Buy at <i>$" + price.toString() + "</i></b>");
-            DisplaySignal("Stochastic", "Buy", price);
+            DisplaySignal("Stochastics", "Buy", price);
             //$('#messageWindow').append("<tr><td><b>Stochastics Signal:</b></td><td><b>Buy at <i>$" + price.toString() + "</i></b></td></tr>");
         }
         if (debugging) {
