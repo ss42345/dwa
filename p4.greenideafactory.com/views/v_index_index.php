@@ -3,7 +3,8 @@
 <? else: ?>
 
 	<? if(!$user): ?>
-		<h2>Welcome to Stock Trading Signals by Green Idea Factory! Please login.</h2><br>
+		<h3>Welcome to the Stock Trading Signal Wizard by Green Idea Factory!</h3>
+        <h3>Please login.</h3>
 	<? else: ?>
 		<h2>Welcome <?=$user->first_name?>!</h2><br>
 	<? endif; ?>

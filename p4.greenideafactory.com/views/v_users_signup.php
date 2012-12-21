@@ -15,7 +15,14 @@
 	Password<br>
 	<input type='password' name='password'>
 	<br><br>
-	
+
+    <? if($error): ?>
+    <div class='error'>
+        Signup failed. Please enter all the fields.
+    </div>
+    <br>
+    <? endif; ?>
+
 	<input type='submit'>
 
 </form> 

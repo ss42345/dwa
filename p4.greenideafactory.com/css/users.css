@@ -6,6 +6,7 @@ body {
 
 .header.row { 
 	height: 75px;
+    width: 1440px;
 	top: 0px;
 	background: #8acfeb;
     border: 0px solid black;
@@ -63,6 +64,7 @@ div.scroll {
 	left:180px;
 	right:0px;
 	height:700px;
+    width: 1255px;
     float:left;
 	position:absolute;
     float:left;

@@ -10,13 +10,16 @@ class users_controller extends base_controller {
 		# echo "Welcome to the users's department";
 	}
 	
-	public function signup() {
+	public function signup($error = NULL) {
 		# echo "This is the signup page";
 	
 		# Setup view
 			$this->template->content = View::instance('v_users_signup');
 			$this->template->title   = "Signup";
-			
+
+        # Pass data to the view
+        $this->template->content->error = $error;
+
 		# Render template
 			echo $this->template;		
 		}
@@ -101,7 +104,17 @@ class users_controller extends base_controller {
 	
 	public function p_signup() {
 
-		# Encrypt the password
+        if (strlen(chop($_POST['first_name'])) == 0 ||
+            strlen(chop($_POST['last_name'])) == 0 ||
+            strlen(chop($_POST['email'])) == 0 ||
+            strlen(chop($_POST['password'])) == 0)
+        {
+
+            # Send them back to the login page
+            Router::redirect("/users/signup/error");
+        }
+
+        # Encrypt the password
 		$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
 		
 		# Time specific data 
