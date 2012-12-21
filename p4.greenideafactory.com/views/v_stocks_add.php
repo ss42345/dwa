@@ -5,6 +5,7 @@
     <input type="text" name="stock" id="StockSymbol"/>
     <br><br>
     Select Time Period:
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <select name="DataPeriod">
         <option value="one_month">One Month</option>
         <option value="three_months">Three Months</option>

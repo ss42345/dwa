@@ -26,7 +26,7 @@
 #messageWindow {
     width:785px;
     height:150px;
-    background: #eee;
+    background: rgb(236, 244, 255);
     left:365px;
     top:500px;
     border: 0px solid black;

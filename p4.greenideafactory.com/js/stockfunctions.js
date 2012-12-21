@@ -206,9 +206,9 @@ $(document).ready(function() { // start doc ready; do not delete this!
     }
 
     function DisplaySignal(type, signal, price) {
-        signalStr = "<b> " + type + " Signal:&nbsp;&nbsp;&nbsp;&nbsp;" + "</b>";
+        signalStr = "<b> " + type + " Signal:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + "</b>";
         priceStr = signal + " at <i>$" + price.toString() + "</i>";
-        $('#messageWindow').append("<tr><td>"+signalStr+"</td><td>  </td><td>"+priceStr+"</td></tr>");
+        $('#messageWindow').append("<h4><tr><td>"+signalStr+"</td><td>"+priceStr+"</td></tr></h4>");
     }
 
     $('#StockSymbol').change(function() {
