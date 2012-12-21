@@ -11,6 +11,9 @@
         <option value="six_months">Six Months</option>
     </select>
     <br><br>
+    <input type="button" id="getstockdata" value="Get Stock Data"/>
+    <br><br><br>
+
 
     <table bgcolor=#87ceeb>
 
@@ -59,10 +62,6 @@
         </tr>
         <tr>
             <input type="submit" value="Add to Watchlist">
-        </tr>
-        <tr>
-            <br>
-            <input type="button" id="getstockdata" value="Get Stock Data"/>
         </tr>
     </table>
     <div id="chartArea">

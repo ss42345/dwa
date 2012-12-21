@@ -55,8 +55,11 @@ $(document).ready(function() { // start doc ready; do not delete this!
 
     // Compute Trading Signals Button Click
     $("#computebutton").click(function() {
+
+        // Clear any existing data
         ClearAllResults();
 
+        // Compute trading signals
         if (useSMA && SMAPeriodValid) {
             RefreshSMAResults();
         }
