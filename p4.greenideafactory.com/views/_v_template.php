@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="/css/users.css"/>
     <link rel="stylesheet" type="text/css" href="/css/trading.css"/>
 
+    <!-- Using local versions of these files due to internet connection problems faced during the development period -->
     <!-- JS -->
 	<!---
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>

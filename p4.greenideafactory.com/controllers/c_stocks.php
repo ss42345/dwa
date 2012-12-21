@@ -145,6 +145,7 @@ class stocks_controller extends base_controller {
 
     }
 
+    // A big thank you to Susan for figuring this out!!!
     public function getstockdata($stockStringIn) {
 
         print_r($stockStringIn);

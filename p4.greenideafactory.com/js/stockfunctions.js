@@ -2,7 +2,7 @@ $(document).ready(function() { // start doc ready; do not delete this!
 
     //alert("Inside stockfunctions document");
 
-    var debugging = true;
+    var debugging = false;
 
     var SMAPeriod = 10;
     var EMAPeriod = 10;
@@ -330,6 +330,16 @@ $(document).ready(function() { // start doc ready; do not delete this!
         }
         return {valid: isValid, msg: message}
     }
+
+    $('#DataPeriod').change(function() {
+        // Reset
+        gCurrentStockData = new Array();
+        gCurrentPriceData = new Array();
+        //gCurrentPriceLegend = new Array();
+        gCurrentPlotData  = new Array();
+        //gCurrentPlotLegend = new Array();
+        //gLegendArray = new Array();
+    })
 
     function ValidatePeriod(name, period){
         var isValid = true;

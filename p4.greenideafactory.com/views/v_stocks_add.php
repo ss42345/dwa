@@ -6,7 +6,7 @@
     <br><br>
     Select Time Period:
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <select name="DataPeriod">
+    <select name="DataPeriod" id="DataPeriod">
         <option value="one_month">One Month</option>
         <option value="three_months">Three Months</option>
         <option value="six_months">Six Months</option>
