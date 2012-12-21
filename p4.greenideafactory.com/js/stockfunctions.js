@@ -517,7 +517,7 @@ $(document).ready(function() { // start doc ready; do not delete this!
         if (sigStochastic.up) {
             // Sell signal
             //$('#StochasticSignal').html("<h3>Stochastics Signal:</h3><b>Sell at <i>$" + price.toString() + "</i></b>");
-            DisplaySignal("Stochastic","Sell",price);
+            DisplaySignal("Stochastics","Sell",price);
             //$('#messageWindow').append("<tr><td><b>Stochastics Signal:</b></td><td><b>Sell at <i>$" + price.toString() + "</i></b></td></tr>");
         }
         else {
