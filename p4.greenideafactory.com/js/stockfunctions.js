@@ -72,9 +72,9 @@ $(document).ready(function() { // start doc ready; do not delete this!
     });
 
     function ClearAllResults() {
-        $('#SMASignal').html('');
-        $('#EMASignal').html('');
-        $('#StochasticSignal').html('');
+        //$('#SMASignal').html('');
+        //$('#EMASignal').html('');
+        //$('#StochasticSignal').html('');
         if (SMAPeriodValid && EMAPeriodValid && StochasticPeriod1Valid && StochasticPeriod2Valid) {
             $('#messageWindow').html('');
         }
@@ -205,6 +205,12 @@ $(document).ready(function() { // start doc ready; do not delete this!
         $('#messageWindow').html("<h4>Warning:</h4>" + message );
     }
 
+    function DisplaySignal(type, signal, price) {
+        signalStr = "<b> " + type + " Signal:&nbsp;&nbsp;&nbsp;&nbsp;" + "</b>";
+        priceStr = signal + " at <i>$" + price.toString() + "</i>";
+        $('#messageWindow').append("<tr><td>"+signalStr+"</td><td>  </td><td>"+priceStr+"</td></tr>");
+    }
+
     $('#StockSymbol').change(function() {
         // Reset any variables
     })
@@ -243,11 +249,15 @@ $(document).ready(function() { // start doc ready; do not delete this!
         var sigSMA = ComputeLatestCrossover(gCurrentStockData, gIdxClose, stockSMA);
         if (sigSMA.up) {
             // Sell signal
-            $('#SMASignal').html("<h3>SMA Signal:</h3><b>Sell at <i>$" + sigSMA.price.toString() + "</i></b>");
+            //$('#SMASignal').html("<h3>SMA Signal:</h3><b>Sell at <i>$" + sigSMA.price.toString() + "</i></b>");
+            DisplaySignal("SMA","Sell",sigSMA.price);
+            //$('#messageWindow').append("<h4>SMA Signal:</h4><b>Sell at <i>$" + sigSMA.price.toString() + "</i></b>");
         }
         else {
             // Buy signal
-            $('#SMASignal').html("<h3>SMA Signal:</h3><b>Buy at <i>$" + sigSMA.price.toString() + "</i></b>");
+            //$('#SMASignal').html("<h3>SMA Signal:</h3><b>Buy at <i>$" + sigSMA.price.toString() + "</i></b>");
+            DisplaySignal("SMA","Buy",sigSMA.price);
+            //$('#messageWindow').append("<h4>SMA Signal:</h4><b>Buy at <i>$" + sigSMA.price.toString() + "</i></b>");
         }
         if (debugging) {
             console.log("SMA");
@@ -290,11 +300,15 @@ $(document).ready(function() { // start doc ready; do not delete this!
         var sigEMA = ComputeLatestCrossover(gCurrentStockData, gIdxClose, stockEMA);
         if (sigEMA.up) {
             // Sell signal
-            $('#EMASignal').html("<h3>EMA Signal:</h3><b>Sell at <i>$" + sigEMA.price.toString() + "</i></b>");
+            //$('#EMASignal').html("<h3>EMA Signal:</h3><b>Sell at <i>$" + sigEMA.price.toString() + "</i></b>");
+            DisplaySignal("EMA","Sell",sigEMA.price);
+            //$('#messageWindow').append("<h4>EMA Signal:</h4><b>Sell at <i>$" + sigEMA.price.toString() + "</i></b>");
         }
         else {
             // Buy signal
-            $('#EMASignal').html("<h3>EMA Signal:</h3><b>Buy at <i>$" + sigEMA.price.toString() + "</i></b>");
+            //$('#EMASignal').html("<h3>EMA Signal:</h3><b>Buy at <i>$" + sigEMA.price.toString() + "</i></b>");
+            DisplaySignal("EMA","Buy",sigEMA.price);
+            //$('#messageWindow').append("<h4>EMA Signal:</h4><b>Buy at <i>$" + sigEMA.price.toString() + "</i></b>");
         }
         if (debugging) {
             console.log("EMA");
@@ -345,11 +359,15 @@ $(document).ready(function() { // start doc ready; do not delete this!
         var price = gCurrentStockData[sigStochastic.idx][gIdxClose];
         if (sigStochastic.up) {
             // Sell signal
-            $('#StochasticSignal').html("<h3>Stochastics Signal:</h3><b>Sell at <i>$" + price.toString() + "</i></b>");
+            //$('#StochasticSignal').html("<h3>Stochastics Signal:</h3><b>Sell at <i>$" + price.toString() + "</i></b>");
+            DisplaySignal("Stochastic","Sell",price);
+            //$('#messageWindow').append("<tr><td><b>Stochastics Signal:</b></td><td><b>Sell at <i>$" + price.toString() + "</i></b></td></tr>");
         }
         else {
             // Buy signal
-            $('#StochasticSignal').html("<h3>Stochastics Signal:</h3><b>Buy at <i>$" + price.toString() + "</i></b>");
+            //$('#StochasticSignal').html("<h3>Stochastics Signal:</h3><b>Buy at <i>$" + price.toString() + "</i></b>");
+            DisplaySignal("Stochastic", "Buy", price);
+            //$('#messageWindow').append("<tr><td><b>Stochastics Signal:</b></td><td><b>Buy at <i>$" + price.toString() + "</i></b></td></tr>");
         }
         if (debugging) {
             console.log("Stochastic.K");

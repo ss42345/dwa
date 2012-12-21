@@ -13,20 +13,20 @@ body {
 }
 
 .header.left {
-    width: 250px;
+    width: 180px;
     height: 75px;
     text-align:center;
-    border: 0px solid blue;
+    border: 1px solid blue;
     padding-left: 15px;
     float:left;
 }
 
 .header.right {
-    left: 250px;
+    left: 180px;
     height: 75px;
     right: 0px;
     text-align:center;
-    border:0px solid red;
+    border:1px solid red;
     position:absolute;
 }
 
@@ -51,23 +51,23 @@ table.subheader {
     border:0px solid brown;
 }
 .left.menu {
-    width: 250px;
+    width: 180px;
     height: 700px;
     left: 0px;
-    border: 0px yellow;
+    border: 1px black;
 }
 
 div.scroll {
 	background-color:#8acfeb;
 	top:0px;
-	left:250px;
+	left:180px;
 	right:0px;
 	height:700px;
     float:left;
 	position:absolute;
     float:left;
 	overflow:scroll;
-	padding-left:40px;
+	padding-left:20px;
     border:0px solid green;
 }
 .messagewindow { 
@@ -75,7 +75,7 @@ div.scroll {
 	left:40px; 
 	right:80px; 
 	height: 120px; 
-	background:white; 
+	background:red;
 	position:absolute;
 	border-radius: 1em 1em 1em 1em ;
 }

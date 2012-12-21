@@ -22,7 +22,7 @@
             <td> </td>
         </tr>
         <tr>
-            <td>SMA Period:</td>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SMA Period:</td>
             <td><input type="text" name="SMAPeriod" id="SMAPeriod"/> </td>
         </tr>
         <tr>
@@ -34,7 +34,7 @@
             <td><br> </td>
         </tr>
         <tr>
-            <td>EMA Period:</td>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EMA Period:</td>
             <td><input type="text" name="EMAPeriod" id="EMAPeriod"/></td>
         </tr>
         <tr>
@@ -46,11 +46,11 @@
             <td> </td>
         </tr>
         <tr>
-            <td>First Period:</td>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;First Period:</td>
             <td><input type="text" name="StochasticPeriod1" id="StochasticPeriod1"/></td>
         </tr>
         <tr>
-            <td>Second Period:</td>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Second Period:</td>
             <td><input type="text" name="StochasticPeriod2" id="StochasticPeriod2"/> </td>
         </tr>
 
@@ -66,14 +66,10 @@
     </table>
     <div id="chartArea">
     </div>
-    <div id="messageWindow">
-    </div>
-    <div id="result">
-        <div id="SMASignal"></div>
-        <div id="EMASignal"></div>
-        <div id="StochasticSignal"></div>
-    </div>
-
+    <table>
+        <div id="messageWindow">
+        </div>
+    </table>
     <br><br><br><br>
 
 
