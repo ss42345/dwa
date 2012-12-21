@@ -85,6 +85,30 @@ $(document).ready(function() { // start doc ready; do not delete this!
         }
     }
 
+    $("#getstockdata").click(function() {
+        //alert("Ajax-inside click function ")
+        $("#StockDataHolder").load("/stocks/getstockdata", function(responseText, statusText, xhr)
+            {
+                //alert("Inside click() response function");
+                if (statusText == "success") {
+                    //alert("Ajax - success");
+                    DisplayInformation(responseText);
+                    var array = responseText.split('\\n')
+                    for (var i in array) {
+                        alert(array[i]);
+                    }
+
+                    alert("Drawing the chart");
+                    drawStockChart(responseText);
+                    alert("Done drawing the chart");
+                }
+
+                if (statusText == "error")
+                    alert("Ajax - Error"+xhr.status+":"+xhr.statusText);
+            }
+        )
+    });
+
     function DisplayInformation(message){
         //console.log(message);
         $('#chartArea').html(message);

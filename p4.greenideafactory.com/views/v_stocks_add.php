@@ -1,5 +1,6 @@
 <form method='POST' action='/stocks/p_add'>
 
+    <br><br>
     <strong>Enter Stock Ticker Symbol:</strong>
     <input type="text" name="stock" id="StockSymbol"/>
     <br><br>
@@ -61,7 +62,7 @@
         </tr>
         <tr>
             <br>
-            <a href="/stocks/getstockdata">Get Data</a>
+            <input type="button" id="getstockdata" value="Get Stock Data"/>
         </tr>
     </table>
     <div id="chartArea">

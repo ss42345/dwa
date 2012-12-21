@@ -29,24 +29,20 @@
 </head>
 
 <body>
-	<!-- Title Row -->
-    <div class="title row">
-	</div>
-
 	<!-- Header -->
     <div class="header row">
-    	<div class="left col center">
+    	<div class="header left">
     		<a href='/'><h3>Home</h3></a>
     	</div>
-    	<div class="right col center">
-    	<h1>
-			Green Idea Exchange Forum
-		</h1>
+    	<div class="header right">
+    	<h2>
+			Stock Trading Signal Wizard
+		</h2>
   	</div>
     </div>
  
     <div class="mainbody">
-        <div class="left col">
+        <div class="left menu">
                 <ul class="listview">
 						<!-- Menu for users who are logged in -->
 						<? if($user): ?>
@@ -71,15 +67,10 @@
 
     </div>
  
-    <div class="footer row">
-    	<div class="left col">
-    	</div>
-    	<div class="right col">
-    		<div>
+    <div id="StockDataHolder">
 
-			</div>
-    	</div>
     </div>
+
 </body>
 
 </html>

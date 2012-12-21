@@ -186,8 +186,8 @@
 
     //alert("Inside ready() function of stockdata.js  ");
 
-    google.load("visualization", "1", {packages:["corechart"]});
-    google.setOnLoadCallback(drawChart2);
+    //google.load("visualization", "1", {packages:["corechart"]});
+    ///google.setOnLoadCallback(drawChart2);
 
     function drawChart2() {
 
@@ -235,15 +235,15 @@
             title: 'Apple xxx Stock History'
         };
 
-        var jsonData = $.ajax({
-            url: "http://ichart.finance.yahoo.com/table.csv?s=MSFT&d=11&e=15&f=2012&g=d&a=2&b=13&c=1986&ignore=.csv",
-            dataType:"json",
-            async: false
-        }).responseText;
-        var data2 = new google.visualization.DataTable(jsonData);
+        //var jsonData = $.ajax({
+         //   url: "http://ichart.finance.yahoo.com/table.csv?s=MSFT&d=11&e=15&f=2012&g=d&a=2&b=13&c=1986&ignore=.csv",
+         //   dataType:"json",
+         //   async: false
+        //}).responseText;
+        //var data2 = new google.visualization.DataTable(jsonData);
 
-        var chart = new google.visualization.LineChart(document.getElementById('chartArea'));
-        chart.draw(data, options);
+        //var chart = new google.visualization.LineChart(document.getElementById('chartArea'));
+        //chart.draw(data, options);
 
         // (3) Third way to do this
         //var wrap = new google.visualization.ChartWrapper({
@@ -255,7 +255,7 @@
         //wrap.draw();
 
         // (4) Fourth way to do this
-        $feed = 'http://ichart.finance.yahoo.com/table.csv?s=MSFT&d=11&e=15&f=2012&g=d&a=2&b=13&c=1986&ignore=.csv';
+        //$feed = 'http://ichart.finance.yahoo.com/table.csv?s=MSFT&d=11&e=15&f=2012&g=d&a=2&b=13&c=1986&ignore=.csv';
         // Do it
         //$data = csvToArray($feed, ',');
 
@@ -272,19 +272,16 @@
         //.complete(function() { alert("complete"); });
     }
 
-    function drawStockChart(stockdata) {
-        google.load("visualization", "1", {packages:["corechart"]});
-        google.setOnLoadCallback(drawChartLocal);
+    google.load("visualization", "1", {packages:["corechart"]});
+    //google.setOnLoadCallback(drawChartLocal);
 
-        function drawChartLocal() {
-
-            var data = google.visualization.arrayToDataTable(stockdata);
-            var options = {
-                title: 'Stock History'
-            };
-            var chart = new google.visualization.LineChart(document.getElementById('chartArea'));
-            chart.draw(data, options);
-        }
+    function drawStockChart(stockdataLoc) {
+        var dataLoc = google.visualization.arrayToDataTable(stockdataLoc);
+        var options = {
+            title: 'Stock History'
+        };
+        var chart = new google.visualization.LineChart(document.getElementById('chartArea'));
+        chart.draw(dataLoc, options);
     }
 
     // Function to convert CSV into associative array

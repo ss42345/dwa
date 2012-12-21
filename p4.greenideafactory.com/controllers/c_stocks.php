@@ -158,17 +158,19 @@ class stocks_controller extends base_controller {
     }
 
     public function getstockdata() {
-        $url = 'http://ichart.finance.yahoo.com/table.csv?s=MSFT&d=11&e=15&f=2012&g=d&a=10&b=13&c=2012&ignore=.csv';
+        // Get from Yahoo
+        $url = 'http://ichart.finance.yahoo.com/table.csv?s=MSFT&d=11&e=19&f=2012&g=d&a=10&b=13&c=2012&ignore=.csv';
         $results = Utils::curl($url);
-
-        $results = array_map("str_getcsv", preg_split('/\r*\n+|\r+/', $results));
+        //$results = array_map("str_getcsv", preg_split('/\r*\n+|\r+/', $results));
+        $jsArray = json_encode($results);
 
         # Debug the results
         #echo Debug::dump($results,"xxxx");
         #var_dump($results);
-        print_r($results);
-        return $results;
+        print_r($jsArray);
+        //print_r("hello world how are you?".date("D M j G:i:s T Y"));
     }
+
 
     /*** Not needed ***
 	public function users() {

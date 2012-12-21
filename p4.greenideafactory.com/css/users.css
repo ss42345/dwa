@@ -1,24 +1,39 @@
-body { 
-	font-family: 'Helvetica Neue', Arial, Sans-Serif; 
-	margin: 0;
-}
-
-.title.row { 
-	height: 25px; 
-	top: 0; 
-	background: lightgrey; 
-	text-align:center;
+body {
+    font-family: 'Helvetica Neue', Arial, Sans-Serif;
+    margin: 0;
+    background: #eee;
 }
 
 .header.row { 
-	height: 75px; 
-	top: 25px; 
-	background: grey;
+	height: 75px;
+	top: 0px;
+	background: #8acfeb;
+    border: 0px solid black;
+    float:left;
 }
+
+.header.left {
+    width: 250px;
+    height: 75px;
+    text-align:center;
+    border: 0px solid blue;
+    padding-left: 15px;
+    float:left;
+}
+
+.header.right {
+    left: 250px;
+    height: 75px;
+    right: 0px;
+    text-align:center;
+    border:0px solid red;
+    position:absolute;
+}
+
 table.subheader {
 	text-align:right;
 	background:lightgreen;
-	top:100 px;
+	top:100px;
 	left:0px;
 	right:0px;
 	height:75px;
@@ -27,27 +42,33 @@ table.subheader {
 }
 .mainbody { 
 	border: 0px solid black;
-	top:100px;
+	top:75px;
 	bottom:50px;
 	left: 0px;
 	right: 0px;
 	position:absolute;
-	background: rgb(150,150,150);	
+	background: #eee;
+    border:0px solid brown;
 }
-.footer.row { 
-	height: 50px; 
-	bottom: 0; 
-	background:grey;
+.left.menu {
+    width: 250px;
+    height: 700px;
+    left: 0px;
+    border: 0px yellow;
 }
+
 div.scroll {
-	background-color:lightgrey;
-	top:150 px;
+	background-color:#8acfeb;
+	top:0px;
 	left:250px;
 	right:0px;
-	height:500px;
+	height:700px;
+    float:left;
 	position:absolute;
+    float:left;
 	overflow:scroll;
 	padding-left:40px;
+    border:0px solid green;
 }
 .messagewindow { 
 	bottom: 40px; 
