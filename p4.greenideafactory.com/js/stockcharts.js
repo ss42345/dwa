@@ -1,15 +1,8 @@
 //$(document).ready(function() { // start doc ready; do not delete this!
 
-    //alert("Inside stockdata document");
-
-    // Global variables
-    gIdxDate = 0;
-    gIdxOpen = 1;
-    gIdxHigh = 2;
-    gIdxLow  = 3;
-    gIdxClose = 4;
-    gIdxVolume = 5;
-    gIdxAdjClose = 6;
+    // Load the visualization library from google.
+    google.load("visualization", "1", {packages:["corechart"]});
+    //google.setOnLoadCallback(drawChartLocal);
 
     // Data for AAPL
     AAPLdata = new Array();
@@ -184,11 +177,6 @@
 		["2012-11-23",239.89,240.00,236.48,239.88,1776800,239.88]
 	];
 
-    //alert("Inside ready() function of stockdata.js  ");
-
-    //google.load("visualization", "1", {packages:["corechart"]});
-    ///google.setOnLoadCallback(drawChart2);
-
     function drawChart2() {
 
         var data = google.visualization.arrayToDataTable([
@@ -232,72 +220,25 @@
             ["2012-11-23",571.50, 548.281]
         ]);
         var options = {
-            title: 'Apple xxx Stock History'
+            title: 'Apple Stock History'
         };
-
-        //var jsonData = $.ajax({
-         //   url: "http://ichart.finance.yahoo.com/table.csv?s=MSFT&d=11&e=15&f=2012&g=d&a=2&b=13&c=1986&ignore=.csv",
-         //   dataType:"json",
-         //   async: false
-        //}).responseText;
-        //var data2 = new google.visualization.DataTable(jsonData);
-
-        //var chart = new google.visualization.LineChart(document.getElementById('chartArea'));
-        //chart.draw(data, options);
-
-        // (3) Third way to do this
-        //var wrap = new google.visualization.ChartWrapper({
-        //    'chartType':'LineChart',
-        //    'dataSourceUrl':'http://ichart.finance.yahoo.com/table.csv?s=MSFT&d=11&e=15&f=2012&g=d&a=2&b=13&c=1986&ignore=.csv',
-        //    'containerId':'visualization',
-        //    'options': {'title':'Population Density (people/km^2)', 'legend':'none'}
-        //});
-        //wrap.draw();
-
-        // (4) Fourth way to do this
-        //$feed = 'http://ichart.finance.yahoo.com/table.csv?s=MSFT&d=11&e=15&f=2012&g=d&a=2&b=13&c=1986&ignore=.csv';
-        // Do it
-        //$data = csvToArray($feed, ',');
-
-        // Print it out as JSON
-        //echo json_encode($data);
-
-        // (5) Fifth way to do this
-        //var yahoourl = 'http://ichart.finance.yahoo.com/table.csv?s=MSFT&d=11&e=15&f=2012&g=d&a=2&b=13&c=1986&ignore=.csv';
-        //var data5 = $.get(yahoourl, function(stockdata){
-        //    alert("Data Loaded: " + stockdata);
-        //})
-        //.success(function() { alert("second success"); })
-        //.error(function() { alert("error"); })
-        //.complete(function() { alert("complete"); });
     }
 
-    // Load the visualization library from google.
-    google.load("visualization", "1", {packages:["corechart"]});
-    //google.setOnLoadCallback(drawChartLocal);
-
-    function drawStockChart(stockdataIn) {
+    function drawStockChart(stockdataIn, legendArrayIn) {
         var dataIn = google.visualization.arrayToDataTable(stockdataIn);
         var options = {
             title: 'Stock History'
         };
+
+        // Add legend
+        for (var j = 0; j < legendArrayIn.length; j++) {
+            dataIn.setColumnLabel(j,legendArrayIn[j]);
+        }
+
+        // Draw the chart
         var chart = new google.visualization.LineChart(document.getElementById('chartArea'));
         chart.draw(dataIn, options);
-    }
 
-    // Function to convert CSV into associative array
-    function csvToArray($file, $delimiter) {
-        if (($handle = fopen($file, 'r')) !== FALSE) {
-            $i = 0;
-            while (($lineArray = fgetcsv($handle, 4000, $delimiter, '"')) !== FALSE) {
-                for ($j = 0; $j < count($lineArray); $j++) {
-                    $arr[$i][$j] = $lineArray[$j];
-                }
-                $i++;
-            }
-            fclose($handle);
-        }
-        return $arr;
     }
 
 

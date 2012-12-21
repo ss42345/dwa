@@ -37,7 +37,7 @@ class stocks_controller extends base_controller {
             "/js/jquery-1.8.3.min.js",
             "/js/jsapi.js",
             "/js/stockfunctions.js",
-            "/js/stockdata.js",
+            "/js/stockcharts.js",
         );
 
         $this->template->client_files = Utils::load_client_files($client_files);

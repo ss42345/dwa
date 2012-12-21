@@ -9,8 +9,20 @@ $(document).ready(function() { // start doc ready; do not delete this!
     var StochasticPeriod1 = 14;
     var StochasticPeriod2 = 5;
 
-    var stockSelected = 'apple';
-    var stockData = '';//AAPLdata;
+    // Global variables
+    var gIdxDate = 0;
+    var gIdxOpen = 1;
+    var gIdxHigh = 2;
+    var gIdxLow  = 3;
+    var gIdxClose = 4;
+    var gIdxVolume = 5;
+    var gIdxAdjClose = 6;
+    var gCurrentStockData;
+    var gCurrentPriceData;
+    var gCurrentPriceLegend;
+    var gCurrentPlotData;
+    var gCurrentPlotLegend;
+    var gLegendArray;
 
     var useSMA = false;
     var useEMA = false;
@@ -26,16 +38,6 @@ $(document).ready(function() { // start doc ready; do not delete this!
     $('#EMAPeriod').val(EMAPeriod);
     $('#StochasticPeriod1').val(StochasticPeriod1);
     $('#StochasticPeriod2').val(StochasticPeriod2);
-
-    // Global variables
-    gIdxDate = 0;
-    gIdxOpen = 1;
-    gIdxHigh = 2;
-    gIdxLow  = 3;
-    gIdxClose = 4;
-    gIdxVolume = 5;
-    gIdxAdjClose = 6;
-
 
     // Display information
     /**/
@@ -53,23 +55,6 @@ $(document).ready(function() { // start doc ready; do not delete this!
 
     // Compute Trading Signals Button Click
     $("#computebutton").click(function() {
-        console.log("Button clicked")
-        stockTicker = $('#StockSymbol').val();
-        switch (stockTicker) {
-            case 'AAPL':
-                stockData = AAPLdata;
-                break;
-            case 'GOOG':
-                stockData = GOOGdata;
-                break;
-            case 'MSFT':
-                stockData = MSFTdata;
-                break;
-            case 'AMZN':
-                stockData = AMZNdata;
-                break;
-        }
-
         ClearAllResults();
 
         if (useSMA && SMAPeriodValid) {
@@ -93,6 +78,9 @@ $(document).ready(function() { // start doc ready; do not delete this!
         if (!useSMA && !useEMA && !useStochastic) {
             DisplayMessage('Please check the checkbox next to at least one trading signal');
         }
+        // Reset current plot data
+        gCurrentPlotData = Clone2D(gCurrentPriceData);
+        gCurrentPlotLegend = Clone1D(gCurrentPriceLegend);
     }
 
     $("#getstockdata").click(function() {
@@ -102,9 +90,18 @@ $(document).ready(function() { // start doc ready; do not delete this!
                     if (debugging) {
                         //DisplayMessage(responseText);
                     }
-                    var jsArray = ConvertToJSArray(responseText);
-                    var plotData = ExtractClosePrice(jsArray);
-                    drawStockChart(plotData);
+                    // Get the stock data as a js array, and legend array.
+                    // Also set the global variable
+                    var jsArray = new Array();
+                    var legendArray = new Array();
+                    ConvertToJSArray(responseText, jsArray, legendArray);
+                    gCurrentStockData = jsArray;
+                    gLegendArray = legendArray;
+
+                    // Extract the closing price of the stock and plot
+                    gCurrentPriceData = ExtractClosePrice(jsArray);
+                    gCurrentPriceLegend = [gLegendArray[gIdxDate], gLegendArray[gIdxClose]];
+                    drawStockChart(gCurrentPriceData, gCurrentPriceLegend);
                 }
 
                 if (statusText == "error")
@@ -114,54 +111,85 @@ $(document).ready(function() { // start doc ready; do not delete this!
     });
 
     // This function converts the input data in text format to JS array format
-    function ConvertToJSArray(dataText) {
+    function ConvertToJSArray(dataText, retArray, retLegendArray) {
         var strArrayIn = dataText.split('\\n');
-        var retArray = new Array();
 
         // Skip the last row while looping
         for (var i=0; i < strArrayIn.length-1; i++) {
             var row = strArrayIn[i];
-            retArray[i] = new Array();
+
             var rowItems = row.split(',');
             if (i == 0) {
                 // Special case: Titles of columns
-                retArray[i][gIdxDate] = rowItems[gIdxDate];
-                retArray[i][gIdxOpen] = rowItems[gIdxOpen];
-                retArray[i][gIdxHigh] = rowItems[gIdxHigh];
-                retArray[i][gIdxLow]  = rowItems[gIdxLow];
-                retArray[i][gIdxClose]  = "Price"; //rowItems[gIdxClose];
-                retArray[i][gIdxVolume] = rowItems[gIdxVolume];
-                retArray[i][gIdxAdjClose] = rowItems[gIdxAdjClose];
+                retLegendArray[gIdxDate] = rowItems[gIdxDate];
+                retLegendArray[gIdxOpen] = rowItems[gIdxOpen];
+                retLegendArray[gIdxHigh] = rowItems[gIdxHigh];
+                retLegendArray[gIdxLow]  = rowItems[gIdxLow];
+                retLegendArray[gIdxClose]  = "Price"; //rowItems[gIdxClose];
+                retLegendArray[gIdxVolume] = rowItems[gIdxVolume];
+                retLegendArray[gIdxAdjClose] = rowItems[gIdxAdjClose];
             }
             else {
+                retArray[i-1] = new Array();
+
                 // Extract numerical information
-                retArray[i][gIdxDate] = rowItems[gIdxDate];
-                retArray[i][gIdxOpen] = Number(rowItems[gIdxOpen]);
-                retArray[i][gIdxHigh] = Number(rowItems[gIdxHigh]);
-                retArray[i][gIdxLow]  = Number(rowItems[gIdxLow]);
-                retArray[i][gIdxClose]  = Number(rowItems[gIdxClose]);
-                retArray[i][gIdxVolume] = Number(rowItems[gIdxVolume]);
-                retArray[i][gIdxAdjClose]  = Number(rowItems[gIdxAdjClose]);
-            }
-            if (debugging) {
-                for (var j=0; j <= gIdxAdjClose; j++) {
-                    //console.log(retArray[i][j]);
+                retArray[i-1][gIdxDate] = rowItems[gIdxDate];
+                retArray[i-1][gIdxOpen] = Number(rowItems[gIdxOpen]);
+                retArray[i-1][gIdxHigh] = Number(rowItems[gIdxHigh]);
+                retArray[i-1][gIdxLow]  = Number(rowItems[gIdxLow]);
+                retArray[i-1][gIdxClose]  = Number(rowItems[gIdxClose]);
+                retArray[i-1][gIdxVolume] = Number(rowItems[gIdxVolume]);
+                retArray[i-1][gIdxAdjClose]  = Number(rowItems[gIdxAdjClose]);
+
+                if (debugging) {
+                    for (var j=0; j <= gIdxAdjClose; j++) {
+                        console.log(retArray[i-1][j]);
+                    }
                 }
             }
         }
-        return retArray;
+    }
+
+    // Function to clone a 1D array
+    function Clone1D(arrayIn) {
+        var arrayOut = arrayIn.slice(0);
+        return arrayOut;
+    }
+
+    // Function to clone a 2D array
+    function Clone2D(arrayIn) {
+        var arrayOut = Clone1D(arrayIn);
+
+        // Loop over all the rows
+        for (var i=0; i < arrayIn.length; i++) {
+            arrayOut[i] = Clone1D(arrayIn[i]);
+        }
+        return arrayOut;
     }
 
     // This function extracts the close price of the stock
     function ExtractClosePrice(jsArrayIn) {
-        var retArray = jsArrayIn;
+        var retArray = Clone2D(jsArrayIn);
 
-        // Skip the last row while looping
+        // Loop over all the rows
         for (var i=0; i < retArray.length; i++) {
             retArray[i].splice(1,3);
             retArray[i].splice(2,2);
         }
         return retArray;
+    }
+
+    // This function appends a column to the end of the array
+    // NOTE: It modifies the input array
+    function AppendColumn(jsArrayIn, columnIn) {
+        var retArray = jsArrayIn; //Clone2D(jsArrayIn);
+
+        // Loop over all the rows
+        for (var i=0; i < retArray.length; i++) {
+            retArray[i].splice(retArray.length,0,columnIn[i]);
+        }
+        return retArray;
+
     }
 
     function DisplayInformation(message){
@@ -184,8 +212,8 @@ $(document).ready(function() { // start doc ready; do not delete this!
             isValid = false;
             message = "Enter a valid number";
         }
-        else if (period <= 1 || period > stockData.length) {
-            var message = "Enter a valid number between 2 and " + stockData.length.toString();
+        else if (period <= 1 || period > gCurrentStockData.length) {
+            var message = "Enter a valid number between 2 and " + gCurrentStockData.length.toString();
             isValid = false;
         }
         return {valid: isValid, msg: message}
@@ -208,8 +236,8 @@ $(document).ready(function() { // start doc ready; do not delete this!
     });
 
     function RefreshSMAResults() {
-        var stockSMA = ComputeSMA(stockData, gIdxClose, SMAPeriod);
-        var sigSMA = ComputeLatestCrossover(stockData, gIdxClose, stockSMA);
+        var stockSMA = ComputeSMA(gCurrentStockData, gIdxClose, SMAPeriod);
+        var sigSMA = ComputeLatestCrossover(gCurrentStockData, gIdxClose, stockSMA);
         if (sigSMA.up) {
             // Sell signal
             $('#SMASignal').html("<h3>SMA Signal:</h3><b>Sell at <i>$" + sigSMA.price.toString() + "</i></b>");
@@ -222,6 +250,15 @@ $(document).ready(function() { // start doc ready; do not delete this!
             console.log("SMA");
             PrintToConsole(stockSMA);
         }
+
+        // Append SMA results
+        gCurrentPlotData = AppendColumn(gCurrentPlotData, stockSMA);
+        if (debugging) {
+            console.log("gCurrentPlotData");
+            PrintToConsole(gCurrentPlotData);
+        }
+        gCurrentPlotLegend[gCurrentPlotLegend.length] = "SMA";
+        drawStockChart(gCurrentPlotData, gCurrentPlotLegend);
     }
 
     //-----------------------------------------------
@@ -246,8 +283,8 @@ $(document).ready(function() { // start doc ready; do not delete this!
         console.log("gIdxClose = " + gIdxClose);
         console.log("EMAPeriod = " + EMAPeriod);
 
-        var stockEMA = ComputeEMA(stockData, gIdxClose, EMAPeriod);
-        var sigEMA = ComputeLatestCrossover(stockData, gIdxClose, stockEMA);
+        var stockEMA = ComputeEMA(gCurrentStockData, gIdxClose, EMAPeriod);
+        var sigEMA = ComputeLatestCrossover(gCurrentStockData, gIdxClose, stockEMA);
         if (sigEMA.up) {
             // Sell signal
             $('#EMASignal').html("<h3>EMA Signal:</h3><b>Sell at <i>$" + sigEMA.price.toString() + "</i></b>");
@@ -261,6 +298,14 @@ $(document).ready(function() { // start doc ready; do not delete this!
             PrintToConsole(stockEMA);
         }
 
+        // Append EMA results
+        gCurrentPlotData = AppendColumn(gCurrentPlotData, stockEMA);
+        if (debugging) {
+            console.log("gCurrentPlotData");
+            PrintToConsole(gCurrentPlotData);
+        }
+        gCurrentPlotLegend[gCurrentPlotLegend.length] = "EMA";
+        drawStockChart(gCurrentPlotData, gCurrentPlotLegend);
     }
 
     //------------------------------------------
@@ -292,9 +337,9 @@ $(document).ready(function() { // start doc ready; do not delete this!
     });
 
     function RefreshStochasticResults() {
-        var stochastic = ComputeStochastic(stockData, gIdxLow, gIdxHigh, gIdxClose, StochasticPeriod1, StochasticPeriod2);
+        var stochastic = ComputeStochastic(gCurrentStockData, gIdxLow, gIdxHigh, gIdxClose, StochasticPeriod1, StochasticPeriod2);
         var sigStochastic = ComputeLatestCrossoverOfTwoMetrics(stochastic.K, stochastic.D);
-        var price = stockData[sigStochastic.idx][gIdxClose];
+        var price = gCurrentStockData[sigStochastic.idx][gIdxClose];
         if (sigStochastic.up) {
             // Sell signal
             $('#StochasticSignal').html("<h3>Stochastics Signal:</h3><b>Sell at <i>$" + price.toString() + "</i></b>");
@@ -303,6 +348,23 @@ $(document).ready(function() { // start doc ready; do not delete this!
             // Buy signal
             $('#StochasticSignal').html("<h3>Stochastics Signal:</h3><b>Buy at <i>$" + price.toString() + "</i></b>");
         }
+        if (debugging) {
+            console.log("Stochastic.K");
+            PrintToConsole(stochastic.K);
+            console.log("Stochastic.D");
+            PrintToConsole(stochastic.D);
+        }
+
+        // Append Stochastic results
+        gCurrentPlotData = AppendColumn(gCurrentPlotData, stochastic.K);
+        gCurrentPlotData = AppendColumn(gCurrentPlotData, stochastic.D);
+        if (debugging) {
+            console.log("gCurrentPlotData");
+            PrintToConsole(gCurrentPlotData);
+        }
+        gCurrentPlotLegend[gCurrentPlotLegend.length] = "Stochastic.K";
+        gCurrentPlotLegend[gCurrentPlotLegend.length] = "Stochastic.D";
+        drawStockChart(gCurrentPlotData, gCurrentPlotLegend);
     }
 
     //==============================================================
@@ -318,8 +380,10 @@ $(document).ready(function() { // start doc ready; do not delete this!
 
     // SMA: Simple Moving Average
     function ComputeSMA(stockData, idx, numPeriods) {
-        console.log('N inside SMA = ' + numPeriods);
-
+        if (debugging) {
+            console.log(stockData);
+            console.log('N inside SMA = ' + numPeriods);
+        }
         // Initialize return variable
         var SMA = new Array();
 
