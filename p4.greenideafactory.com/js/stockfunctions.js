@@ -86,19 +86,56 @@ $(document).ready(function() { // start doc ready; do not delete this!
         gCurrentPlotLegend = Clone1D(gCurrentPriceLegend);
     }
 
+    // This function constructs the quoteString based on the user selection
+    function getQuoteString() {
+        //
+        //Example: s=MSFT&d=11&e=19&f=2012&g=d&a=11&b=1&c=2012
+        //
+        var endpart = "&ignore=.csv";
+        var symbol = $('#StockSymbol').val();
+        var today = new Date();
+        d=today.getMonth();
+        e=today.getDate();
+        f=today.getFullYear();
+
+        period = $('select').val();
+        switch (period) {
+            case "one_month":
+                a = d-1;
+                break;
+            case "three_months":
+                a=d-3;
+                break;
+            case "six_months":
+                a=d-6;
+                break;
+        }
+        b=e;
+        c=f;
+        if (a < 0) {
+            a = 12+a;
+            c = c-1;
+        }
+        var quoteString = "s="+symbol + "&d="+d + "&e="+e + "&f="+f + "&g=d" + "&a=" + a + "&b=" + b + "&c=" + c + endpart;
+        return quoteString;
+    }
+
+    // User clicks on the getStockData button
     $("#getstockdata").click(function() {
-        $("#StockDataHolder").load("/stocks/getstockdata", function(responseText, statusText, xhr)
+
+        var quoteString = getQuoteString();
+
+        $("#StockDataHolder").load("/stocks/getstockdata/"+quoteString, function(responseText, statusText, xhr)
             {
+                alert(statusText);
+
                 if (statusText == "success") {
-                    if (debugging) {
-                        //DisplayMessage(responseText);
-                    }
                     // Get the stock data as a js array, and legend array.
                     // Also set the global variable
                     var jsArray = new Array();
                     var legendArray = new Array();
                     ConvertToJSArray(responseText, jsArray, legendArray);
-                    gCurrentStockData = jsArray;
+                    gCurrentStockData = jsArray.reverse();
                     gLegendArray = legendArray;
 
                     // Extract the closing price of the stock and plot

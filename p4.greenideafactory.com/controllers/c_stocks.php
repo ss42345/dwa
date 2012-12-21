@@ -104,18 +104,6 @@ class stocks_controller extends base_controller {
         echo $this->template;
     }
 
-    /**
-    public function remove_stock($stock_id_to_remove) {
-
-        # Delete this connection
-        $where_condition = 'WHERE user_id = '.$this->user->user_id.' AND stock_id = '.$stock_id_to_remove;
-        DB::instance(DB_NAME)->delete('stocks', $where_condition);
-
-        # Send them back
-        Router::redirect("/stocks/mystocks");
-    }
-    **/
-
     public function p_remove() {
 
         $where_condition = "WHERE stocks.user_id = ".$this->user->user_id." AND (";
@@ -157,10 +145,15 @@ class stocks_controller extends base_controller {
 
     }
 
-    public function getstockdata() {
+    public function getstockdata($stockStringIn) {
+
+        print_r($stockStringIn);
+
         // Get from Yahoo
-        $url = 'http://ichart.finance.yahoo.com/table.csv?s=MSFT&d=11&e=19&f=2012&g=d&a=11&b=1&c=2012&ignore=.csv';
-        $results = Utils::curl($url);
+        //$url = 'http://ichart.finance.yahoo.com/table.csv?s=MSFT&d=11&e=19&f=2012&g=d&a=11&b=1&c=2012&ignore=.csv';
+        $urlString = "http://ichart.finance.yahoo.com/table.csv?".$stockStringIn;
+
+        $results = Utils::curl($urlString);
         //$results = array_map("str_getcsv", preg_split('/\r*\n+|\r+/', $results));
         $jsArray = json_encode($results);
 
@@ -169,118 +162,4 @@ class stocks_controller extends base_controller {
         #var_dump($results);
         print_r($jsArray);
     }
-
-
-    /*** Not needed ***
-	public function users() {
-
-		# Set up the view
-		$this->template->content = View::instance("v_posts_users");
-		$this->template->title   = "Users";
-	
-		# Build our query to get all the users
-		$q = "SELECT *
-			  FROM users";
-		
-		# Execute the query to get all the users. Store the result array in the variable $users
-		$users = DB::instance(DB_NAME)->select_rows($q);
-	
-		# Build our query to figure out what connections does this user already have? I.e. who are they following
-		$q = "SELECT * 
-			  FROM users_users
-			  WHERE user_id = ".$this->user->user_id;
-		
-		# Execute this query with the select_array method
-		# select_array will return our results in an array and use the "users_id_followed" field as the index.
-		# This will come in handy when we get to the view
-		# Store our results (an array) in the variable $connections
-		$connections = DB::instance(DB_NAME)->select_array($q, 'user_id_followed');
-			
-		# Pass data (users and connections) to the view
-		$this->template->content->users       = $users;
-		$this->template->content->connections = $connections;
-
-		# Render the view
-		echo $this->template;
-	}
-
-	public function follow($user_id_followed) {
-		
-		# Prepare our data array to be inserted
-		$data = Array(
-			"created" => Time::now(),
-			"user_id" => $this->user->user_id,
-			"user_id_followed" => $user_id_followed
-			);
-	
-		# Do the insert
-		DB::instance(DB_NAME)->insert('users_users', $data);
-
-		# Send them back
-		Router::redirect("/posts/users");
-	}
-
-	public function unfollow($user_id_followed) {
-
-		# Delete this connection
-		$where_condition = 'WHERE user_id = '.$this->user->user_id.' AND user_id_followed = '.$user_id_followed;
-		DB::instance(DB_NAME)->delete('users_users', $where_condition);
-	
-		# Send them back
-		Router::redirect("/posts/users");
-	}
-
-	public function index() {
-
-		# Set up view
-		$this->template->content = View::instance('v_posts_index');
-		$this->template->title   = "Posts";
-	
-		# Build a query of the users this user is following - we're only interested in their posts
-		$q = "SELECT * 
-			  FROM users_users
-			  WHERE user_id = ".$this->user->user_id;
-	
-		# Execute our query, storing the results in a variable $connections
-		$connections = DB::instance(DB_NAME)->select_rows($q);
-	
-		# In order to query for the posts we need, we're going to need a string of user id's, separated by commas
-		# To create this, loop through our connections array
-		$connections_string = "";
-		foreach($connections as $connection) {
-			$connections_string .= $connection['user_id_followed'].",";
-		}
-	
-		# Remove the final comma 
-		$connections_string = substr($connections_string, 0, -1);
-
-		if(!$connections_string) {
-			# Reset the view
-			$this->template->content = View::instance('v_index_index');
-			$this->template->title   = "Message";
-
-			# Set the message
-			$this->template->content->message = $this->user->first_name.", you are not following anyone yet.";
-			
-			# Render view
-			echo $this->template;	
-		}
-		else {
-			# Build our query to grab the posts
-			$q = "SELECT * 
-				 FROM posts 
-				 JOIN users USING (user_id)
-				 WHERE posts.user_id IN (".$connections_string.")"; # This is where we use that string of user_ids we created
-				
-			# Run our query, store the results in the variable $posts
-			$posts = DB::instance(DB_NAME)->select_rows($q);
-	
-			# Pass data to the view
-			$this->template->content->posts = $posts;
-	
-			# Render view
-			echo $this->template;
-		}
-	}
-     ****/
 }

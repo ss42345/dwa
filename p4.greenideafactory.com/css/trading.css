@@ -20,7 +20,7 @@
     position: absolute;
     text-align: center;
     /*border-radius: 1em 1em 1em 1em ;*/
-    border: 1px solid orange;
+    border: 0px solid orange;
     /*padding-left: 15px;*/
 }
 #messageWindow {
