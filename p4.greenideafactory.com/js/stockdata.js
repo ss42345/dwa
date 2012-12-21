@@ -272,16 +272,17 @@
         //.complete(function() { alert("complete"); });
     }
 
+    // Load the visualization library from google.
     google.load("visualization", "1", {packages:["corechart"]});
     //google.setOnLoadCallback(drawChartLocal);
 
-    function drawStockChart(stockdataLoc) {
-        var dataLoc = google.visualization.arrayToDataTable(stockdataLoc);
+    function drawStockChart(stockdataIn) {
+        var dataIn = google.visualization.arrayToDataTable(stockdataIn);
         var options = {
             title: 'Stock History'
         };
         var chart = new google.visualization.LineChart(document.getElementById('chartArea'));
-        chart.draw(dataLoc, options);
+        chart.draw(dataIn, options);
     }
 
     // Function to convert CSV into associative array

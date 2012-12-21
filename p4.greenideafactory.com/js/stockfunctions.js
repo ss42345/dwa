@@ -27,6 +27,16 @@ $(document).ready(function() { // start doc ready; do not delete this!
     $('#StochasticPeriod1').val(StochasticPeriod1);
     $('#StochasticPeriod2').val(StochasticPeriod2);
 
+    // Global variables
+    gIdxDate = 0;
+    gIdxOpen = 1;
+    gIdxHigh = 2;
+    gIdxLow  = 3;
+    gIdxClose = 4;
+    gIdxVolume = 5;
+    gIdxAdjClose = 6;
+
+
     // Display information
     /**/
     DisplayInformation("<h2>Welcome to the Stock Trading Signal Wizard!</h2><br>" +
@@ -86,21 +96,15 @@ $(document).ready(function() { // start doc ready; do not delete this!
     }
 
     $("#getstockdata").click(function() {
-        //alert("Ajax-inside click function ")
         $("#StockDataHolder").load("/stocks/getstockdata", function(responseText, statusText, xhr)
             {
-                //alert("Inside click() response function");
                 if (statusText == "success") {
-                    //alert("Ajax - success");
-                    DisplayInformation(responseText);
-                    var array = responseText.split('\\n')
-                    for (var i in array) {
-                        alert(array[i]);
+                    if (debugging) {
+                        //DisplayMessage(responseText);
                     }
-
-                    alert("Drawing the chart");
-                    drawStockChart(responseText);
-                    alert("Done drawing the chart");
+                    var jsArray = ConvertToJSArray(responseText);
+                    var plotData = ExtractClosePrice(jsArray);
+                    drawStockChart(plotData);
                 }
 
                 if (statusText == "error")
@@ -108,6 +112,57 @@ $(document).ready(function() { // start doc ready; do not delete this!
             }
         )
     });
+
+    // This function converts the input data in text format to JS array format
+    function ConvertToJSArray(dataText) {
+        var strArrayIn = dataText.split('\\n');
+        var retArray = new Array();
+
+        // Skip the last row while looping
+        for (var i=0; i < strArrayIn.length-1; i++) {
+            var row = strArrayIn[i];
+            retArray[i] = new Array();
+            var rowItems = row.split(',');
+            if (i == 0) {
+                // Special case: Titles of columns
+                retArray[i][gIdxDate] = rowItems[gIdxDate];
+                retArray[i][gIdxOpen] = rowItems[gIdxOpen];
+                retArray[i][gIdxHigh] = rowItems[gIdxHigh];
+                retArray[i][gIdxLow]  = rowItems[gIdxLow];
+                retArray[i][gIdxClose]  = "Price"; //rowItems[gIdxClose];
+                retArray[i][gIdxVolume] = rowItems[gIdxVolume];
+                retArray[i][gIdxAdjClose] = rowItems[gIdxAdjClose];
+            }
+            else {
+                // Extract numerical information
+                retArray[i][gIdxDate] = rowItems[gIdxDate];
+                retArray[i][gIdxOpen] = Number(rowItems[gIdxOpen]);
+                retArray[i][gIdxHigh] = Number(rowItems[gIdxHigh]);
+                retArray[i][gIdxLow]  = Number(rowItems[gIdxLow]);
+                retArray[i][gIdxClose]  = Number(rowItems[gIdxClose]);
+                retArray[i][gIdxVolume] = Number(rowItems[gIdxVolume]);
+                retArray[i][gIdxAdjClose]  = Number(rowItems[gIdxAdjClose]);
+            }
+            if (debugging) {
+                for (var j=0; j <= gIdxAdjClose; j++) {
+                    //console.log(retArray[i][j]);
+                }
+            }
+        }
+        return retArray;
+    }
+
+    // This function extracts the close price of the stock
+    function ExtractClosePrice(jsArrayIn) {
+        var retArray = jsArrayIn;
+
+        // Skip the last row while looping
+        for (var i=0; i < retArray.length; i++) {
+            retArray[i].splice(1,3);
+            retArray[i].splice(2,2);
+        }
+        return retArray;
+    }
 
     function DisplayInformation(message){
         //console.log(message);
@@ -167,7 +222,6 @@ $(document).ready(function() { // start doc ready; do not delete this!
             console.log("SMA");
             PrintToConsole(stockSMA);
         }
-        drawStockChart(stockData);
     }
 
     //-----------------------------------------------
