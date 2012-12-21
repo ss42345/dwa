@@ -170,6 +170,9 @@ $(document).ready(function() { // start doc ready; do not delete this!
         }
 
         var quoteString = getQuoteString();
+        alert("Changing cursor")
+        $("body").css("cursor", "wait");
+        alert("Cursor changed")
 
         $("#StockDataHolder").load("/stocks/getstockdata/"+quoteString, function(responseText, statusText, xhr) {
                 if (statusText == "success") {
@@ -183,6 +186,7 @@ $(document).ready(function() { // start doc ready; do not delete this!
                         StockDataValid = false;
                         DisplayMessage("Failed to retrieve stock data");
                         $('#StockSymbol').css("background-color","pink");
+                        $("body").css("cursor", "default");
                         return;
                     }
 
@@ -202,6 +206,7 @@ $(document).ready(function() { // start doc ready; do not delete this!
                     alert("Ajax - Error"+xhr.status+":"+xhr.statusText);
         })
         $("#StockDataHolder").hide();
+        $("body").css("cursor", "default");
     });
 
     // This function converts the input data in text format to JS array format
