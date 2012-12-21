@@ -63,6 +63,9 @@ $(document).ready(function() { // start doc ready; do not delete this!
             return false;
         }
 
+        // Change the cursor
+        $("body").css("cursor", "progress");
+
         // Clear any existing data
         ClearAllResults();
 
@@ -76,6 +79,9 @@ $(document).ready(function() { // start doc ready; do not delete this!
         if (SymbolValid && StockDataValid && useStochastic && StochasticPeriod1Valid && StochasticPeriod2Valid) {
             RefreshStochasticResults();
         }
+
+        // Reset the cursor
+        $("body").css("cursor", "default");
     });
 
     function ClearAllResults() {
@@ -170,9 +176,9 @@ $(document).ready(function() { // start doc ready; do not delete this!
         }
 
         var quoteString = getQuoteString();
-        alert("Changing cursor")
-        $("body").css("cursor", "wait");
-        alert("Cursor changed")
+
+        // Change the cursor
+        $("body").css("cursor", "progress");
 
         $("#StockDataHolder").load("/stocks/getstockdata/"+quoteString, function(responseText, statusText, xhr) {
                 if (statusText == "success") {
@@ -186,6 +192,8 @@ $(document).ready(function() { // start doc ready; do not delete this!
                         StockDataValid = false;
                         DisplayMessage("Failed to retrieve stock data");
                         $('#StockSymbol').css("background-color","pink");
+
+                        // Reset the cursor
                         $("body").css("cursor", "default");
                         return;
                     }
@@ -206,6 +214,8 @@ $(document).ready(function() { // start doc ready; do not delete this!
                     alert("Ajax - Error"+xhr.status+":"+xhr.statusText);
         })
         $("#StockDataHolder").hide();
+
+        // Reset the cursor
         $("body").css("cursor", "default");
     });
 
