@@ -1,0 +1,94 @@
+
+#computebutton {
+    width:180px;
+}
+#stocksetup {
+    background: #8acfeb;
+    width: 400px;
+    left:0px;
+    height: 650px;
+    padding-left: 15px;
+    border:2px solid #ff00ff;
+}
+#chartArea {
+    width:800px;
+    height:500px;
+    background: rgb(236, 244, 255);
+    left:365px;
+    top:0px;
+    border: 0px solid black;
+    position: absolute;
+    text-align: center;
+    /*border-radius: 1em 1em 1em 1em ;*/
+    border: 0px solid orange;
+    /*padding-left: 15px;*/
+}
+#messageWindow {
+    width:785px;
+    height:150px;
+    background: rgb(236, 244, 255);
+    left:365px;
+    top:500px;
+    border: 0px solid black;
+    position: absolute;
+    text-align: center;
+    border-radius: 1em 1em 1em 1em ;
+    padding-left: 15px;
+}
+
+#resultInfo {
+    width:400px;
+    height:650px;
+    background: #bec1ff;
+    left:815px;
+    top:0px;
+    border: 1px solid black;
+    position: absolute;
+}
+
+#result {
+    width:400px;
+    height:650px;
+    background: #8acfeb;
+    left:1165px;
+    top:0px;
+    border: 1px solid black;
+    position: absolute;
+}
+
+#SMASignal {
+    width: 785px;
+    height: 100px;
+    top:500px;
+    background: #8acfeb;
+    border: 1px solid black;
+    position: absolute;
+    text-align: center;
+    padding-left: 15px;
+}
+#EMASignal {
+    width: 785px;
+    height: 100px;
+    top:600px;
+    background: #8acfeb;
+    border: 1px solid black;
+    position: absolute;
+    text-align: center;
+    padding-left: 15px;
+}
+#StochasticSignal {
+    width: 785px;
+    height: 100px;
+    top:700px;
+    background: #8acfeb;
+    border: 1px solid black;
+    position: absolute;
+    text-align: center;
+    padding-left: 15px;
+}
+
+h3 {text-align: left}
+h4 {text-align: left}
+h5 {text-align: left}
+li {text-align: left}
+tr {text-align: left}
